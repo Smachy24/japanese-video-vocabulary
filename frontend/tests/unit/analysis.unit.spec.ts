@@ -35,9 +35,9 @@ vi.mock("@patdx/kuromoji", () => {
 });
 
 vi.mock("../../src/features/analysis/dictionary", () => ({
-  lookupMeaning: async (lemma: string) => {
-    const dict: Record<string, string[]> = {
-      "食べる": ["manger"],
+  getDictionaryInfo: async (lemma: string) => {
+    const dict: Record<string, { meanings: string[]; reading: string }> = {
+      "食べる": { meanings: ["manger"], reading: "たべる" },
     };
     return dict[lemma];
   },
@@ -54,8 +54,9 @@ describe("tokenize", () => {
           surface: "食べる",
           lemma: "食べる",
           pos: "動詞",
-          readingKatakana: "タベル",
-          readingHiragana: "たべる",
+          readingSurfaceKatakana: "タベル",
+          readingSurfaceHiragana: "たべる",
+          readingLemma: "たべる",
           meaning: ["manger"],
         },
       ],

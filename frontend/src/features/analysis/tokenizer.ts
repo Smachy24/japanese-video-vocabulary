@@ -1,7 +1,8 @@
 import { type LoaderConfig, TokenizerBuilder } from "@patdx/kuromoji";
 import type { SentenceAnalysis } from "../../types/sentence-analysis";
 import { katakanaToHiragana } from "../../common/utils";
-import { lookupMeaning } from "./dictionary";
+import { getDictionaryInfo } from "./dictionary";
+import type { Token } from "../../types/token";
 
 const loader: LoaderConfig = {
   async loadArrayBuffer(url: string) {
@@ -26,15 +27,19 @@ export async function tokenize(text: string): Promise<SentenceAnalysis> {
 
   const rawTokens = tokenizer.tokenize(text);
 
-  const tokens = await Promise.all(
-    rawTokens.map(async (t) => ({
-      surface: t.surface_form,
-      lemma: t.basic_form,
-      pos: t.pos,
-      readingKatakana: t.reading,
-      readingHiragana: t.reading ? katakanaToHiragana(t.reading) : undefined,
-      meaning: await lookupMeaning(t.basic_form),
-    }))
+  const tokens: Array<Token> = await Promise.all(
+    rawTokens.map(async (t) => {
+      const dictionaryInfo = await getDictionaryInfo(t.basic_form);
+      return {
+        surface: t.surface_form,
+        lemma: t.basic_form,
+        pos: t.pos,
+        readingSurfaceKatakana: t.reading,
+        readingSurfaceHiragana: t.reading ? katakanaToHiragana(t.reading) : undefined,
+        readingLemma: t.basic_form ? dictionaryInfo?.reading : undefined,
+        meaning: t.basic_form ? dictionaryInfo?.meanings : undefined,      
+      }
+    })
   );
 
   return {

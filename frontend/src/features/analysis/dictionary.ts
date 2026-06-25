@@ -1,7 +1,8 @@
-type DictEntry = [string, string, string, string, number, Array<string>, number, string];
+type DictEntry = [kanji: string, reading: string, pos: string, sense: string, misc: string, meanings: Array<string>];
 
 interface DictionaryResult {
   meanings: Array<string>;
+  reading: string;
 }
 
 const TERM_BANK_COUNT = 3;
@@ -20,9 +21,12 @@ async function loadDictionary(): Promise<Map<string, DictionaryResult>> {
   const banks = await Promise.all(fetches);
 
   for (const entries of banks) {
-    for (const [kanji, , , , , meanings] of entries) {
+    for (const [kanji, reading, , , , meanings] of entries) {
       if (!map.has(kanji)) {
-        map.set(kanji, { meanings });
+        map.set(kanji, {
+          meanings,
+          reading,
+        });
       }
     }
   }
@@ -37,7 +41,7 @@ function getDictionary(): Promise<Map<string, DictionaryResult>> {
   return dictionaryPromise;
 }
 
-export async function lookupMeaning(lemma: string): Promise<Array<string> | undefined> {
+export async function getDictionaryInfo(lemma: string): Promise<{ meanings: Array<string>; reading: string } | undefined> {
   const dict = await getDictionary();
-  return dict.get(lemma)?.meanings;
+  return dict.get(lemma);
 }
