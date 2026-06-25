@@ -1,6 +1,7 @@
 import { type LoaderConfig, TokenizerBuilder } from "@patdx/kuromoji";
 import type { SentenceAnalysis } from "../../types/sentence-analysis";
 import { katakanaToHiragana } from "../../common/utils";
+import { lookupMeaning } from "./dictionary";
 
 const loader: LoaderConfig = {
   async loadArrayBuffer(url: string) {
@@ -23,13 +24,18 @@ const tokenizerPromise = new TokenizerBuilder({
 export async function tokenize(text: string): Promise<SentenceAnalysis> {
   const tokenizer = await tokenizerPromise;
 
-  const tokens = tokenizer.tokenize(text).map((t) => ({
-    surface: t.surface_form,
-    lemma: t.basic_form,
-    pos: t.pos,
-    readingKatakana: t.reading,
-    readingHiragana: t.reading ? katakanaToHiragana(t.reading) : undefined,
-  }));
+  const rawTokens = tokenizer.tokenize(text);
+
+  const tokens = await Promise.all(
+    rawTokens.map(async (t) => ({
+      surface: t.surface_form,
+      lemma: t.basic_form,
+      pos: t.pos,
+      readingKatakana: t.reading,
+      readingHiragana: t.reading ? katakanaToHiragana(t.reading) : undefined,
+      meaning: await lookupMeaning(t.basic_form),
+    }))
+  );
 
   return {
     text,

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { tokenize } from "../../../src/features/analysis/tokenizer";
-import { SentenceAnalysis } from "../../../src/types/sentence-analysis";
+import { tokenize } from "../../src/features/analysis/tokenizer";
+import { SentenceAnalysis } from "../../src/types/sentence-analysis";
 
 vi.mock("@patdx/kuromoji", () => {
   const mockTokenizer = {
@@ -34,6 +34,15 @@ vi.mock("@patdx/kuromoji", () => {
   };
 });
 
+vi.mock("../../src/features/analysis/dictionary", () => ({
+  lookupMeaning: async (lemma: string) => {
+    const dict: Record<string, string[]> = {
+      "食べる": ["manger"],
+    };
+    return dict[lemma];
+  },
+}));
+
 
 describe("tokenize", () => {
   it("should tokenize a simple verb", async () => {
@@ -47,6 +56,7 @@ describe("tokenize", () => {
           pos: "動詞",
           readingKatakana: "タベル",
           readingHiragana: "たべる",
+          meaning: ["manger"],
         },
       ],
     };

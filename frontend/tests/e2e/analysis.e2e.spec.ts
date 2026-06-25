@@ -16,5 +16,6 @@ test("tokenize a simple verb with the real dictionary", async ({ page }) => {
     pos: "動詞",
     readingKatakana: "タベル",
     readingHiragana: "たべる",
+    meaning: ["manger"],
   });
 });

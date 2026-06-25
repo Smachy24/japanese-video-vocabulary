@@ -1,7 +1,8 @@
 export interface Token {
   surface: string;
-  lemma: string; // The base form of the word
-  pos: string; // Part of speech (e.g., noun, verb, adjective)
+  lemma: string;
+  pos: string;
   readingKatakana?: string;
   readingHiragana?: string;
+  meaning?: string[];
 }
