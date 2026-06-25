@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; font-family:'Hanken Grotesk', system-ui, sans-serif; color:#2B2722; -webkit-font-smoothing:antialiased; }
+  rt { font-weight:500; }
+  @keyframes none-x { from{} to{} }
+</style>
+</helmet>
+
+<div style="position:absolute; left:0; top:0; width:1280px;">
+  <div data-drags-parent="1" style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:#8A8073; margin-bottom:18px; cursor:grab;">Komorebi — Immersion japonaise · Système &amp; écrans</div>
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:40px;">
+    <div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+        <div style="width:30px; height:30px; border-radius:7px; background:#3D4F8C; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Noto Sans JP'; font-size:16px; font-weight:700;">木</div>
+        <span style="font-size:26px; font-weight:700; letter-spacing:-0.01em;">Komorebi</span>
+      </div>
+      <div style="font-size:15px; color:#6E665C; max-width:560px; line-height:1.5;">Regarder des vidéos japonaises avec sous-titres enrichis — furigana automatiques, analyse mot à mot et suivi du vocabulaire en contexte réel.</div>
+    </div>
+    <div style="display:flex; gap:28px;">
+      <div>
+        <div style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8073; margin-bottom:9px;">Type</div>
+        <div style="display:flex; gap:7px; font-family:'Noto Sans JP'; font-size:13px;">
+          <span style="display:flex; align-items:center; gap:6px; color:#4B4338;"><span style="width:9px; height:9px; border-radius:50%; background:#D8604E;"></span>Nouveau</span>
+          <span style="display:flex; align-items:center; gap:6px; color:#4B4338;"><span style="width:9px; height:9px; border-radius:50%; background:#D99B2B;"></span>En cours</span>
+          <span style="display:flex; align-items:center; gap:6px; color:#4B4338;"><span style="width:9px; height:9px; border-radius:50%; background:#4E9D6B;"></span>Connu</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:0; top:148px; width:1280px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:12px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Écran lecteur — desktop</div>
+  <div style="background:#FAF7F2; border-radius:6px; box-shadow:0 1px 3px rgba(40,30,20,.10), 0 18px 50px rgba(40,30,20,.07); overflow:hidden; border:1px solid #ECE6DC;">
+
+    <!-- app bar -->
+    <div style="height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:#fff; border-bottom:1px solid #ECE6DC;">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div style="display:flex; align-items:center; gap:9px; color:#6E665C; font-size:14px; cursor:pointer;"><span style="font-size:17px;">‹</span>Catalogue</div>
+        <div style="width:1px; height:18px; background:#ECE6DC;"></div>
+        <div style="font-family:'Noto Sans JP'; font-size:14px; font-weight:500; color:#2B2722;">日本語ラジオ — 第3回</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:18px;">
+        <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#6E665C;">Niveau cible
+          <span style="display:inline-flex; align-items:center; gap:5px; background:#ECEEF7; color:#3D4F8C; font-weight:600; font-size:12px; padding:4px 9px; border-radius:20px;">N4 ▾</span>
+        </div>
+        <div style="width:30px; height:30px; border-radius:50%; background:#3D4F8C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600;">R</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 380px;">
+
+      <!-- video + transport -->
+      <div style="padding:20px;">
+        <div style="position:relative; aspect-ratio:16/9; border-radius:8px; overflow:hidden; background:#16140F; background-image:repeating-linear-gradient(135deg,#1c1a14 0 14px,#191710 14px 28px);">
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:'IBM Plex Mono','SF Mono',monospace; font-size:12px; letter-spacing:0.18em; color:#5b564a; text-transform:uppercase;">vidéo locale / youtube</span>
+          </div>
+          <!-- subtitle overlay -->
+          <div style="position:absolute; left:0; right:0; bottom:0; padding:34px 30px 26px; background:linear-gradient(to top, rgba(8,7,5,.82), rgba(8,7,5,0));">
+            <div style="font-family:'Noto Sans JP'; font-size:34px; line-height:2; color:#fff; text-align:center; font-weight:500; letter-spacing:0.01em;">
+              <ruby>今日<rt style="font-size:15px; color:#cfd6ee;">きょう</rt></ruby>は<ruby>学校<rt style="font-size:15px; color:#cfd6ee;">がっこう</rt></ruby>へ<ruby>行<rt style="font-size:15px; color:#cfd6ee;">い</rt></ruby>きます
+            </div>
+            <div style="text-align:center; font-size:14px; color:rgba(255,255,255,.62); margin-top:6px;">Aujourd'hui, je vais à l'école.</div>
+          </div>
+        </div>
+
+        <!-- transport -->
+        <div style="margin-top:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8A8073;">02:14</span>
+            <div style="flex:1; height:5px; border-radius:3px; background:#E7E1D8; position:relative;">
+              <div style="position:absolute; left:0; top:0; bottom:0; width:38%; background:#3D4F8C; border-radius:3px;"></div>
+              <div style="position:absolute; left:38%; top:50%; width:13px; height:13px; border-radius:50%; background:#3D4F8C; border:2px solid #fff; transform:translate(-50%,-50%); box-shadow:0 1px 3px rgba(0,0,0,.25);"></div>
+            </div>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8A8073;">05:48</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:14px;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <div style="width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:15px; cursor:pointer;">⏮</div>
+              <div style="width:46px; height:46px; border-radius:50%; background:#3D4F8C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; box-shadow:0 3px 10px rgba(61,79,140,.35);">❚❚</div>
+              <div style="width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:15px; cursor:pointer;">⏭</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #E7E1D8; border-radius:22px; padding:6px 12px; cursor:pointer;">
+                <span style="width:30px; height:16px; border-radius:10px; background:#3D4F8C; position:relative; display:inline-block;"><span style="position:absolute; right:2px; top:2px; width:12px; height:12px; border-radius:50%; background:#fff;"></span></span>
+                <span style="font-size:13px; color:#3D4F8C; font-weight:600;">Pause auto</span>
+              </div>
+              <div style="width:36px; height:36px; border-radius:9px; border:1px solid #E7E1D8; background:#fff; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:14px;">🔊</div>
+              <div style="width:36px; height:36px; border-radius:9px; border:1px solid #E7E1D8; background:#fff; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:14px;">⛶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- vocab panel -->
+      <div style="border-left:1px solid #ECE6DC; background:#fff; display:flex; flex-direction:column;">
+        <div style="padding:18px 20px 14px; border-bottom:1px solid #F0EBE2;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8073; font-weight:600;">Phrase en cours</span>
+            <span style="font-size:12px; color:#A89E8F;">5 mots</span>
+          </div>
+          <div style="font-family:'Noto Sans JP'; font-size:19px; margin-top:10px; color:#2B2722;">今日は学校へ行きます</div>
+        </div>
+
+        <div style="padding:12px 14px; display:flex; flex-direction:column; gap:8px; overflow:auto;">
+
+          <!-- word card: 今日 known -->
+          <div style="display:flex; gap:12px; padding:12px 13px; border:1px solid #EAE4DA; border-left:3px solid #4E9D6B; border-radius:8px; background:#fff;">
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:baseline; gap:9px;">
+                <span style="font-family:'Noto Sans JP'; font-size:22px; color:#2B2722;"><ruby>今日<rt style="font-size:11px; color:#7E8AB5;">きょう</rt></ruby></span>
+                <span style="font-size:13px; color:#6E665C; font-family:'Noto Sans JP';">きょう</span>
+              </div>
+              <div style="font-size:14px; color:#4B4338; margin-top:5px;">aujourd'hui</div>
+              <div style="display:flex; align-items:center; gap:7px; margin-top:9px;">
+                <span style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:2px 8px; border-radius:5px;">nom</span>
+                <span style="font-size:11px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 8px; border-radius:5px;">N5</span>
+              </div>
+            </div>
+            <div style="color:#C9C1B4; font-size:16px; cursor:pointer;">☆</div>
+          </div>
+
+          <!-- word card: は particle -->
+          <div style="display:flex; gap:12px; padding:11px 13px; border:1px solid #EFE9E0; border-left:3px solid #D8D2C7; border-radius:8px; background:#FCFAF6;">
+            <div style="flex:1;">
+              <div style="display:flex; align-items:baseline; gap:9px;">
+                <span style="font-family:'Noto Sans JP'; font-size:20px; color:#6E665C;">は</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:7px; margin-top:7px;">
+                <span style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:2px 8px; border-radius:5px;">particule</span>
+                <span style="font-size:11px; color:#A89E8F;">thème · « wa »</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- word card: 学校 learning -->
+          <div style="display:flex; gap:12px; padding:12px 13px; border:1px solid #EAE4DA; border-left:3px solid #D99B2B; border-radius:8px; background:#fff;">
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:baseline; gap:9px;">
+                <span style="font-family:'Noto Sans JP'; font-size:22px; color:#2B2722;"><ruby>学校<rt style="font-size:11px; color:#7E8AB5;">がっこう</rt></ruby></span>
+                <span style="font-size:13px; color:#6E665C; font-family:'Noto Sans JP';">がっこう</span>
+              </div>
+              <div style="font-size:14px; color:#4B4338; margin-top:5px;">école</div>
+              <div style="display:flex; align-items:center; gap:7px; margin-top:9px;">
+                <span style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:2px 8px; border-radius:5px;">nom</span>
+                <span style="font-size:11px; font-weight:700; color:#B07D17; background:#FBF1DD; padding:2px 8px; border-radius:5px;">N5</span>
+                <span style="font-size:11px; color:#A89E8F;">vu 3×</span>
+              </div>
+            </div>
+            <div style="color:#C9C1B4; font-size:16px; cursor:pointer;">☆</div>
+          </div>
+
+          <!-- word card: へ particle -->
+          <div style="display:flex; gap:12px; padding:11px 13px; border:1px solid #EFE9E0; border-left:3px solid #D8D2C7; border-radius:8px; background:#FCFAF6;">
+            <div style="flex:1;">
+              <span style="font-family:'Noto Sans JP'; font-size:20px; color:#6E665C;">へ</span>
+              <div style="display:flex; align-items:center; gap:7px; margin-top:7px;">
+                <span style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:2px 8px; border-radius:5px;">particule</span>
+                <span style="font-size:11px; color:#A89E8F;">direction · « e »</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- word card: 行きます new -->
+          <div style="display:flex; gap:12px; padding:12px 13px; border:1px solid #EAE4DA; border-left:3px solid #D8604E; border-radius:8px; background:#fff;">
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:baseline; gap:9px;">
+                <span style="font-family:'Noto Sans JP'; font-size:22px; color:#2B2722;"><ruby>行<rt style="font-size:11px; color:#7E8AB5;">い</rt></ruby>きます</span>
+                <span style="font-size:13px; color:#6E665C; font-family:'Noto Sans JP';">いきます</span>
+              </div>
+              <div style="font-size:13px; color:#A89E8F; margin-top:3px;">lemme · <span style="font-family:'Noto Sans JP'; color:#6E665C;">行く（いく）</span></div>
+              <div style="font-size:14px; color:#4B4338; margin-top:5px;">aller</div>
+              <div style="display:flex; align-items:center; gap:7px; margin-top:9px;">
+                <span style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:2px 8px; border-radius:5px;">verbe · poli</span>
+                <span style="font-size:11px; font-weight:700; color:#C24B36; background:#FBEBE7; padding:2px 8px; border-radius:5px;">N5</span>
+                <span style="font-size:11px; color:#C24B36;">nouveau</span>
+              </div>
+            </div>
+            <div style="color:#D99B2B; font-size:16px; cursor:pointer;">★</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div style="position:absolute; left:1440px; top:148px; width:390px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:12px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Lecteur — mobile</div>
+  <div style="width:390px; background:#FAF7F2; border-radius:30px; box-shadow:0 1px 3px rgba(40,30,20,.10), 0 18px 50px rgba(40,30,20,.08); overflow:hidden; border:1px solid #ECE6DC;">
+
+    <!-- status + appbar -->
+    <div style="background:#fff;">
+      <div style="height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 22px; font-size:13px; font-weight:600; color:#2B2722;"><span>9:41</span><span style="letter-spacing:0.1em; color:#8A8073;">● ● ●</span></div>
+      <div style="height:48px; display:flex; align-items:center; justify-content:space-between; padding:0 16px; border-bottom:1px solid #ECE6DC;">
+        <span style="color:#6E665C; font-size:18px;">‹</span>
+        <span style="font-family:'Noto Sans JP'; font-size:14px; font-weight:500;">日本語ラジオ — 第3回</span>
+        <span style="display:inline-flex; align-items:center; gap:4px; background:#ECEEF7; color:#3D4F8C; font-weight:600; font-size:11px; padding:3px 8px; border-radius:20px;">N4 ▾</span>
+      </div>
+    </div>
+
+    <!-- video -->
+    <div style="position:relative; aspect-ratio:16/9; background:#16140F; background-image:repeating-linear-gradient(135deg,#1c1a14 0 12px,#191710 12px 24px);">
+      <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;"><span style="font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.16em; color:#5b564a; text-transform:uppercase;">vidéo</span></div>
+      <div style="position:absolute; left:0; right:0; bottom:0; padding:22px 16px 14px; background:linear-gradient(to top, rgba(8,7,5,.82), rgba(8,7,5,0));">
+        <div style="font-family:'Noto Sans JP'; font-size:21px; line-height:2; color:#fff; text-align:center; font-weight:500;">
+          <ruby>今日<rt style="font-size:10px; color:#cfd6ee;">きょう</rt></ruby>は<ruby>学校<rt style="font-size:10px; color:#cfd6ee;">がっこう</rt></ruby>へ<ruby>行<rt style="font-size:10px; color:#cfd6ee;">い</rt></ruby>きます
+        </div>
+        <div style="text-align:center; font-size:11px; color:rgba(255,255,255,.6); margin-top:3px;">Aujourd'hui, je vais à l'école.</div>
+      </div>
+    </div>
+
+    <!-- transport -->
+    <div style="background:#fff; padding:12px 16px 14px; border-bottom:1px solid #ECE6DC;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8A8073;">02:14</span>
+        <div style="flex:1; height:4px; border-radius:3px; background:#E7E1D8; position:relative;"><div style="position:absolute; left:0; top:0; bottom:0; width:38%; background:#3D4F8C; border-radius:3px;"></div><div style="position:absolute; left:38%; top:50%; width:11px; height:11px; border-radius:50%; background:#3D4F8C; border:2px solid #fff; transform:translate(-50%,-50%);"></div></div>
+        <span style="font-family:'IBM Plex Mono',monospace; font-size:10px; color:#8A8073;">05:48</span>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:11px; color:#3D4F8C; font-weight:600;">Pause auto</span>
+          <span style="width:28px; height:15px; border-radius:10px; background:#3D4F8C; position:relative; display:inline-block;"><span style="position:absolute; right:2px; top:2px; width:11px; height:11px; border-radius:50%; background:#fff;"></span></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <span style="color:#6E665C; font-size:15px;">⏮</span>
+          <span style="width:40px; height:40px; border-radius:50%; background:#3D4F8C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px;">❚❚</span>
+          <span style="color:#6E665C; font-size:15px;">⏭</span>
+        </div>
+        <div style="display:flex; gap:14px; color:#6E665C; font-size:14px;"><span>🔊</span><span>⛶</span></div>
+      </div>
+    </div>
+
+    <!-- vocab list -->
+    <div style="padding:14px 16px 22px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;">
+        <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8073; font-weight:600;">Phrase en cours</span>
+        <span style="font-size:11px; color:#A89E8F;">5 mots</span>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:7px;">
+        <div style="display:flex; align-items:center; gap:11px; padding:10px 12px; border:1px solid #EAE4DA; border-left:3px solid #4E9D6B; border-radius:8px; background:#fff;">
+          <span style="font-family:'Noto Sans JP'; font-size:19px;"><ruby>今日<rt style="font-size:9px; color:#7E8AB5;">きょう</rt></ruby></span>
+          <div style="flex:1;"><div style="font-size:13px; color:#4B4338;">aujourd'hui</div><div style="font-size:10px; color:#A89E8F; margin-top:2px;">nom</div></div>
+          <span style="font-size:10px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 7px; border-radius:5px;">N5</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:11px; padding:10px 12px; border:1px solid #EAE4DA; border-left:3px solid #D99B2B; border-radius:8px; background:#fff;">
+          <span style="font-family:'Noto Sans JP'; font-size:19px;"><ruby>学校<rt style="font-size:9px; color:#7E8AB5;">がっこう</rt></ruby></span>
+          <div style="flex:1;"><div style="font-size:13px; color:#4B4338;">école</div><div style="font-size:10px; color:#A89E8F; margin-top:2px;">nom · vu 3×</div></div>
+          <span style="font-size:10px; font-weight:700; color:#B07D17; background:#FBF1DD; padding:2px 7px; border-radius:5px;">N5</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:11px; padding:10px 12px; border:1px solid #EAE4DA; border-left:3px solid #D8604E; border-radius:8px; background:#fff;">
+          <span style="font-family:'Noto Sans JP'; font-size:19px;"><ruby>行<rt style="font-size:9px; color:#7E8AB5;">い</rt></ruby>きます</span>
+          <div style="flex:1;"><div style="font-size:13px; color:#4B4338;">aller</div><div style="font-size:10px; color:#C24B36; margin-top:2px;">verbe · nouveau</div></div>
+          <span style="font-size:10px; font-weight:700; color:#C24B36; background:#FBEBE7; padding:2px 7px; border-radius:5px;">N5</span>
+        </div>
+        <div style="text-align:center; font-size:12px; color:#A89E8F; padding-top:4px;">+ 2 particules</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:0; top:1090px; width:1280px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:12px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Catalogue — accueil &amp; score de difficulté</div>
+  <div style="background:#FAF7F2; border-radius:6px; box-shadow:0 1px 3px rgba(40,30,20,.10), 0 18px 50px rgba(40,30,20,.07); border:1px solid #ECE6DC; overflow:hidden;">
+    <div style="height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; background:#fff; border-bottom:1px solid #ECE6DC;">
+      <div style="display:flex; align-items:center; gap:10px;"><div style="width:26px; height:26px; border-radius:6px; background:#3D4F8C; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Noto Sans JP'; font-size:13px; font-weight:700;">木</div><span style="font-weight:700; font-size:17px;">Komorebi</span></div>
+      <div style="display:flex; align-items:center; gap:24px; font-size:14px; color:#6E665C;"><span style="color:#2B2722; font-weight:600;">Bibliothèque</span><span>Vocabulaire</span><span>Profil</span></div>
+      <div style="display:flex; align-items:center; gap:12px;"><div style="background:#3D4F8C; color:#fff; font-size:13px; font-weight:600; padding:8px 15px; border-radius:8px;">+ Importer</div><div style="width:30px; height:30px; border-radius:50%; background:#3D4F8C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600;">R</div></div>
+    </div>
+
+    <div style="padding:24px;">
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:20px;">
+        <div><div style="font-size:22px; font-weight:700;">Ma bibliothèque</div><div style="font-size:14px; color:#8A8073; margin-top:3px;">6 vidéos · difficulté calculée selon votre vocabulaire</div></div>
+        <div style="display:flex; gap:8px; font-size:13px;"><span style="padding:7px 13px; border-radius:20px; background:#2B2722; color:#fff;">Toutes</span><span style="padding:7px 13px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#6E665C;">À continuer</span><span style="padding:7px 13px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#6E665C;">Faciles pour moi</span></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
+
+        <!-- card 1 -->
+        <div style="background:#fff; border:1px solid #EAE4DA; border-radius:12px; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:16/9; background:#16140F; background-image:repeating-linear-gradient(135deg,#211e16 0 12px,#1a1812 12px 24px);">
+            <span style="position:absolute; right:8px; bottom:8px; background:rgba(8,7,5,.7); color:#fff; font-size:11px; font-family:'IBM Plex Mono',monospace; padding:2px 6px; border-radius:4px;">05:48</span>
+            <span style="position:absolute; left:8px; top:8px; background:#E7F2EB; color:#3B7A53; font-size:11px; font-weight:700; padding:3px 8px; border-radius:20px;">Facile · 82% connu</span>
+          </div>
+          <div style="padding:13px 14px 15px;">
+            <div style="font-family:'Noto Sans JP'; font-size:15px; font-weight:500;">日本語ラジオ — 第3回</div>
+            <div style="font-size:12px; color:#A89E8F; margin-top:3px;">214 mots · 38 nouveaux</div>
+            <div style="display:flex; height:6px; border-radius:4px; overflow:hidden; margin-top:12px;"><span style="flex:5; background:#4E9D6B;"></span><span style="flex:3; background:#85C49E;"></span><span style="flex:1.5; background:#D99B2B;"></span><span style="flex:0.6; background:#D8604E;"></span></div>
+            <div style="display:flex; gap:10px; margin-top:9px; font-size:11px; color:#8A8073;"><span>N5 52%</span><span>N4 28%</span><span>N3 14%</span><span>N2+ 6%</span></div>
+          </div>
+        </div>
+
+        <!-- card 2 -->
+        <div style="background:#fff; border:1px solid #EAE4DA; border-radius:12px; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:16/9; background:#16140F; background-image:repeating-linear-gradient(135deg,#211e16 0 12px,#1a1812 12px 24px);">
+            <span style="position:absolute; right:8px; bottom:8px; background:rgba(8,7,5,.7); color:#fff; font-size:11px; font-family:'IBM Plex Mono',monospace; padding:2px 6px; border-radius:4px;">12:30</span>
+            <span style="position:absolute; left:8px; top:8px; background:#FBF1DD; color:#B07D17; font-size:11px; font-weight:700; padding:3px 8px; border-radius:20px;">Moyen · 61% connu</span>
+          </div>
+          <div style="padding:13px 14px 15px;">
+            <div style="font-family:'Noto Sans JP'; font-size:15px; font-weight:500;">街歩き vlog — 京都</div>
+            <div style="font-size:12px; color:#A89E8F; margin-top:3px;">486 mots · 121 nouveaux</div>
+            <div style="display:flex; height:6px; border-radius:4px; overflow:hidden; margin-top:12px;"><span style="flex:3; background:#4E9D6B;"></span><span style="flex:3; background:#85C49E;"></span><span style="flex:3; background:#D99B2B;"></span><span style="flex:2; background:#D8604E;"></span></div>
+            <div style="display:flex; gap:10px; margin-top:9px; font-size:11px; color:#8A8073;"><span>N5 34%</span><span>N4 30%</span><span>N3 22%</span><span>N2+ 14%</span></div>
+          </div>
+        </div>
+
+        <!-- card 3 -->
+        <div style="background:#fff; border:1px solid #EAE4DA; border-radius:12px; overflow:hidden;">
+          <div style="position:relative; aspect-ratio:16/9; background:#16140F; background-image:repeating-linear-gradient(135deg,#211e16 0 12px,#1a1812 12px 24px);">
+            <span style="position:absolute; right:8px; bottom:8px; background:rgba(8,7,5,.7); color:#fff; font-size:11px; font-family:'IBM Plex Mono',monospace; padding:2px 6px; border-radius:4px;">24:10</span>
+            <span style="position:absolute; left:8px; top:8px; background:#FBEBE7; color:#C24B36; font-size:11px; font-weight:700; padding:3px 8px; border-radius:20px;">Difficile · 39% connu</span>
+          </div>
+          <div style="padding:13px 14px 15px;">
+            <div style="font-family:'Noto Sans JP'; font-size:15px; font-weight:500;">アニメ抜粋 — 一話</div>
+            <div style="font-size:12px; color:#A89E8F; margin-top:3px;">902 mots · 410 nouveaux</div>
+            <div style="display:flex; height:6px; border-radius:4px; overflow:hidden; margin-top:12px;"><span style="flex:2; background:#4E9D6B;"></span><span style="flex:2; background:#85C49E;"></span><span style="flex:3; background:#D99B2B;"></span><span style="flex:4; background:#D8604E;"></span></div>
+            <div style="display:flex; gap:10px; margin-top:9px; font-size:11px; color:#8A8073;"><span>N5 22%</span><span>N4 24%</span><span>N3 28%</span><span>N2+ 26%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:1440px; top:1090px; width:780px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:12px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Base de vocabulaire — filtre JLPT &amp; statuts</div>
+  <div style="background:#FAF7F2; border-radius:6px; box-shadow:0 1px 3px rgba(40,30,20,.10), 0 18px 50px rgba(40,30,20,.07); border:1px solid #ECE6DC; overflow:hidden;">
+    <div style="padding:20px 22px 16px; background:#fff; border-bottom:1px solid #ECE6DC;">
+      <div style="display:flex; align-items:flex-end; justify-content:space-between;">
+        <div><div style="font-size:20px; font-weight:700;">Vocabulaire rencontré</div><div style="font-size:13px; color:#8A8073; margin-top:2px;">1 248 mots · 3 vidéos</div></div>
+        <div style="display:flex; gap:16px;">
+          <div style="text-align:center;"><div style="font-size:18px; font-weight:700; color:#4E9D6B;">612</div><div style="font-size:11px; color:#8A8073;">Connus</div></div>
+          <div style="text-align:center;"><div style="font-size:18px; font-weight:700; color:#B07D17;">389</div><div style="font-size:11px; color:#8A8073;">En cours</div></div>
+          <div style="text-align:center;"><div style="font-size:18px; font-weight:700; color:#C24B36;">247</div><div style="font-size:11px; color:#8A8073;">Nouveaux</div></div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px;">
+        <div style="display:flex; gap:6px; font-size:12px;">
+          <span style="padding:6px 12px; border-radius:20px; background:#3D4F8C; color:#fff; font-weight:600;">≤ N4</span>
+          <span style="padding:6px 12px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#6E665C;">N5</span>
+          <span style="padding:6px 12px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#6E665C;">N4</span>
+          <span style="padding:6px 12px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#6E665C;">N3</span>
+          <span style="padding:6px 12px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#6E665C;">N2</span>
+          <span style="padding:6px 12px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#6E665C;">N1</span>
+          <span style="padding:6px 12px; border-radius:20px; background:#fff; border:1px solid #E7E1D8; color:#A89E8F;">sans niveau</span>
+        </div>
+        <span style="font-size:12px; color:#8A8073;">Trié par fréquence ▾</span>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 0.7fr 0.8fr 0.7fr; padding:9px 22px; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#A89E8F; border-bottom:1px solid #F0EBE2;"><span>Mot</span><span>Traduction</span><span>Classe</span><span>Occur.</span><span>JLPT</span></div>
+
+      <!-- rows -->
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 0.7fr 0.8fr 0.7fr; align-items:center; padding:11px 22px; border-bottom:1px solid #F4F0E8; border-left:3px solid #4E9D6B; background:#fff;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="font-family:'Noto Sans JP'; font-size:20px;"><ruby>学校<rt style="font-size:10px; color:#7E8AB5;">がっこう</rt></ruby></span><span style="font-size:12px; color:#A89E8F; font-family:'Noto Sans JP';">がっこう</span></div>
+        <span style="font-size:13px; color:#4B4338;">école</span><span style="font-size:12px; color:#8A8073;">nom</span><span style="font-size:13px; color:#4B4338; font-weight:600;">42×</span><span style="font-size:11px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 8px; border-radius:5px; justify-self:start;">N5</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 0.7fr 0.8fr 0.7fr; align-items:center; padding:11px 22px; border-bottom:1px solid #F4F0E8; border-left:3px solid #4E9D6B; background:#FCFAF6;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="font-family:'Noto Sans JP'; font-size:20px;"><ruby>今日<rt style="font-size:10px; color:#7E8AB5;">きょう</rt></ruby></span><span style="font-size:12px; color:#A89E8F; font-family:'Noto Sans JP';">きょう</span></div>
+        <span style="font-size:13px; color:#4B4338;">aujourd'hui</span><span style="font-size:12px; color:#8A8073;">nom</span><span style="font-size:13px; color:#4B4338; font-weight:600;">37×</span><span style="font-size:11px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 8px; border-radius:5px; justify-self:start;">N5</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 0.7fr 0.8fr 0.7fr; align-items:center; padding:11px 22px; border-bottom:1px solid #F4F0E8; border-left:3px solid #D99B2B; background:#fff;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="font-family:'Noto Sans JP'; font-size:20px;"><ruby>勉強<rt style="font-size:10px; color:#7E8AB5;">べんきょう</rt></ruby></span><span style="font-size:12px; color:#A89E8F; font-family:'Noto Sans JP';">べんきょう</span></div>
+        <span style="font-size:13px; color:#4B4338;">étude</span><span style="font-size:12px; color:#8A8073;">nom · suru</span><span style="font-size:13px; color:#4B4338; font-weight:600;">11×</span><span style="font-size:11px; font-weight:700; color:#B07D17; background:#FBF1DD; padding:2px 8px; border-radius:5px; justify-self:start;">N5</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 0.7fr 0.8fr 0.7fr; align-items:center; padding:11px 22px; border-bottom:1px solid #F4F0E8; border-left:3px solid #D99B2B; background:#FCFAF6;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="font-family:'Noto Sans JP'; font-size:20px;"><ruby>図書館<rt style="font-size:10px; color:#7E8AB5;">としょかん</rt></ruby></span><span style="font-size:12px; color:#A89E8F; font-family:'Noto Sans JP';">としょかん</span></div>
+        <span style="font-size:13px; color:#4B4338;">bibliothèque</span><span style="font-size:12px; color:#8A8073;">nom</span><span style="font-size:13px; color:#4B4338; font-weight:600;">8×</span><span style="font-size:11px; font-weight:700; color:#B07D17; background:#FBF1DD; padding:2px 8px; border-radius:5px; justify-self:start;">N4</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 0.7fr 0.8fr 0.7fr; align-items:center; padding:11px 22px; border-bottom:1px solid #F4F0E8; border-left:3px solid #D8604E; background:#fff;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="font-family:'Noto Sans JP'; font-size:20px;"><ruby>面白<rt style="font-size:10px; color:#7E8AB5;">おもしろ</rt></ruby>い</span><span style="font-size:12px; color:#A89E8F; font-family:'Noto Sans JP';">おもしろい</span></div>
+        <span style="font-size:13px; color:#4B4338;">intéressant</span><span style="font-size:12px; color:#8A8073;">adjectif</span><span style="font-size:13px; color:#4B4338; font-weight:600;">3×</span><span style="font-size:11px; font-weight:700; color:#C24B36; background:#FBEBE7; padding:2px 8px; border-radius:5px; justify-self:start;">N4</span>
+      </div>
+      <div style="display:grid; grid-template-columns:1.6fr 1fr 0.7fr 0.8fr 0.7fr; align-items:center; padding:11px 22px; border-left:3px solid #D8604E; background:#FCFAF6;">
+        <div style="display:flex; align-items:center; gap:9px;"><span style="font-family:'Noto Sans JP'; font-size:20px;">めっちゃ</span></div>
+        <span style="font-size:13px; color:#4B4338;">super (familier)</span><span style="font-size:12px; color:#8A8073;">adverbe</span><span style="font-size:13px; color:#4B4338; font-weight:600;">2×</span><span style="font-size:11px; font-weight:700; color:#A89E8F; background:#F2EEE6; padding:2px 8px; border-radius:5px; justify-self:start;">—</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:0; top:1640px; width:1280px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:12px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Profil — niveau estimé &amp; progression</div>
+  <div style="background:#FAF7F2; border-radius:6px; box-shadow:0 1px 3px rgba(40,30,20,.10), 0 18px 50px rgba(40,30,20,.07); border:1px solid #ECE6DC; padding:24px; display:grid; grid-template-columns:340px 1fr; gap:20px;">
+
+    <!-- level card -->
+    <div style="background:#2B2722; border-radius:14px; padding:26px 24px; color:#fff; background-image:radial-gradient(circle at 80% 0%, rgba(61,79,140,.5), transparent 55%);">
+      <div style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,.55);">Niveau estimé</div>
+      <div style="display:flex; align-items:baseline; gap:8px; margin-top:10px;"><span style="font-size:64px; font-weight:700; line-height:1; letter-spacing:-0.02em;">N4.3</span></div>
+      <div style="font-size:13px; color:rgba(255,255,255,.6); margin-top:8px;">À mi-chemin entre N4 et N3 · recalculé en continu</div>
+      <div style="height:1px; background:rgba(255,255,255,.12); margin:22px 0;"></div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span style="font-size:13px; color:rgba(255,255,255,.7);">Progression vers N3</span><span style="font-size:13px; font-weight:600;">63%</span></div>
+      <div style="height:7px; border-radius:4px; background:rgba(255,255,255,.14); overflow:hidden;"><div style="width:63%; height:100%; background:#7E8AB5; border-radius:4px;"></div></div>
+      <div style="display:flex; gap:20px; margin-top:24px;">
+        <div><div style="font-size:24px; font-weight:700;">1 248</div><div style="font-size:12px; color:rgba(255,255,255,.55);">mots rencontrés</div></div>
+        <div><div style="font-size:24px; font-weight:700;">612</div><div style="font-size:12px; color:rgba(255,255,255,.55);">mots connus</div></div>
+      </div>
+    </div>
+
+    <!-- right -->
+    <div style="display:flex; flex-direction:column; gap:18px;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <!-- JLPT distribution -->
+        <div style="background:#fff; border:1px solid #EAE4DA; border-radius:12px; padding:18px 20px;">
+          <div style="font-size:13px; font-weight:600; margin-bottom:16px;">Mots connus par niveau JLPT</div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:12px; color:#6E665C; width:26px;">N5</span><div style="flex:1; height:9px; background:#F0EBE2; border-radius:5px; overflow:hidden;"><div style="width:94%; height:100%; background:#4E9D6B; border-radius:5px;"></div></div><span style="font-size:12px; color:#8A8073; width:60px; text-align:right;">312 / 332</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:12px; color:#6E665C; width:26px;">N4</span><div style="flex:1; height:9px; background:#F0EBE2; border-radius:5px; overflow:hidden;"><div style="width:71%; height:100%; background:#4E9D6B; border-radius:5px;"></div></div><span style="font-size:12px; color:#8A8073; width:60px; text-align:right;">214 / 300</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:12px; color:#6E665C; width:26px;">N3</span><div style="flex:1; height:9px; background:#F0EBE2; border-radius:5px; overflow:hidden;"><div style="width:38%; height:100%; background:#D99B2B; border-radius:5px;"></div></div><span style="font-size:12px; color:#8A8073; width:60px; text-align:right;">68 / 180</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:12px; color:#6E665C; width:26px;">N2</span><div style="flex:1; height:9px; background:#F0EBE2; border-radius:5px; overflow:hidden;"><div style="width:14%; height:100%; background:#D8604E; border-radius:5px;"></div></div><span style="font-size:12px; color:#8A8073; width:60px; text-align:right;">16 / 110</span></div>
+            <div style="display:flex; align-items:center; gap:10px;"><span style="font-size:12px; color:#6E665C; width:26px;">N1</span><div style="flex:1; height:9px; background:#F0EBE2; border-radius:5px; overflow:hidden;"><div style="width:5%; height:100%; background:#D8604E; border-radius:5px;"></div></div><span style="font-size:12px; color:#8A8073; width:60px; text-align:right;">2 / 90</span></div>
+          </div>
+        </div>
+
+        <!-- progression over time -->
+        <div style="background:#fff; border:1px solid #EAE4DA; border-radius:12px; padding:18px 20px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;"><span style="font-size:13px; font-weight:600;">Mots appris</span><span style="font-size:12px; color:#8A8073;">12 dernières semaines</span></div>
+          <div style="display:flex; align-items:flex-end; gap:6px; height:96px;">
+            <div style="flex:1; height:22%; background:#E4E7F1; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:34%; background:#E4E7F1; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:28%; background:#E4E7F1; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:46%; background:#CDD3E6; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:40%; background:#CDD3E6; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:58%; background:#B6BEDB; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:52%; background:#B6BEDB; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:67%; background:#9FA9CF; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:74%; background:#9FA9CF; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:62%; background:#7E8AB5; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:88%; background:#7E8AB5; border-radius:3px 3px 0 0;"></div>
+            <div style="flex:1; height:100%; background:#3D4F8C; border-radius:3px 3px 0 0;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:9px; font-size:11px; color:#A89E8F;"><span>avr.</span><span>mai</span><span>juin</span></div>
+        </div>
+      </div>
+
+      <!-- weak points -->
+      <div style="background:#fff; border:1px solid #EAE4DA; border-radius:12px; padding:18px 20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;"><span style="font-size:13px; font-weight:600;">Points faibles — à revoir</span><span style="font-size:12px; color:#3D4F8C; font-weight:600;">Lancer une révision →</span></div>
+        <div style="display:flex; gap:9px; flex-wrap:wrap;">
+          <span style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid #EAE4DA; border-radius:10px; font-family:'Noto Sans JP'; font-size:15px;"><ruby>難<rt style="font-size:9px; color:#7E8AB5;">むずか</rt></ruby>しい<span style="font-family:'Hanken Grotesk'; font-size:11px; color:#C24B36; background:#FBEBE7; padding:1px 6px; border-radius:4px;">N4</span></span>
+          <span style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid #EAE4DA; border-radius:10px; font-family:'Noto Sans JP'; font-size:15px;"><ruby>経済<rt style="font-size:9px; color:#7E8AB5;">けいざい</rt></ruby><span style="font-family:'Hanken Grotesk'; font-size:11px; color:#C24B36; background:#FBEBE7; padding:1px 6px; border-radius:4px;">N3</span></span>
+          <span style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid #EAE4DA; border-radius:10px; font-family:'Noto Sans JP'; font-size:15px;"><ruby>政府<rt style="font-size:9px; color:#7E8AB5;">せいふ</rt></ruby><span style="font-family:'Hanken Grotesk'; font-size:11px; color:#C24B36; background:#FBEBE7; padding:1px 6px; border-radius:4px;">N2</span></span>
+          <span style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid #EAE4DA; border-radius:10px; font-family:'Noto Sans JP'; font-size:15px;"><ruby>慣<rt style="font-size:9px; color:#7E8AB5;">な</rt></ruby>れる<span style="font-family:'Hanken Grotesk'; font-size:11px; color:#B07D17; background:#FBF1DD; padding:1px 6px; border-radius:4px;">N3</span></span>
+          <span style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid #EAE4DA; border-radius:10px; font-family:'Noto Sans JP'; font-size:15px;"><ruby>増<rt style="font-size:9px; color:#7E8AB5;">ふ</rt></ruby>える<span style="font-family:'Hanken Grotesk'; font-size:11px; color:#B07D17; background:#FBF1DD; padding:1px 6px; border-radius:4px;">N3</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:1440px; top:1640px; width:620px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:12px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Importer — vidéo &amp; sous-titres</div>
+  <div style="background:#fff; border-radius:14px; box-shadow:0 1px 3px rgba(40,30,20,.10), 0 18px 50px rgba(40,30,20,.07); border:1px solid #ECE6DC; padding:24px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;"><div style="font-size:19px; font-weight:700;">Nouvelle vidéo</div><span style="color:#A89E8F; font-size:18px;">✕</span></div>
+    <div style="font-size:13px; color:#8A8073; margin-bottom:20px;">La vidéo et les sous-titres restent sur votre appareil. Seul le vocabulaire est synchronisé.</div>
+
+    <div style="display:flex; gap:14px;">
+      <div style="flex:1; border:1.5px dashed #CBD2E6; background:#F7F8FC; border-radius:12px; padding:24px 16px; text-align:center;">
+        <div style="width:40px; height:40px; border-radius:10px; background:#ECEEF7; color:#3D4F8C; display:flex; align-items:center; justify-content:center; font-size:18px; margin:0 auto 12px;">▶</div>
+        <div style="font-size:14px; font-weight:600; color:#2B2722;">Glisser une vidéo</div>
+        <div style="font-size:12px; color:#A89E8F; margin-top:4px;">MP4, WebM, MKV · ou URL YouTube</div>
+        <div style="margin-top:14px; font-size:12px; color:#3D4F8C; font-weight:600; border:1px solid #CBD2E6; border-radius:8px; padding:7px 0;">Parcourir</div>
+      </div>
+      <div style="flex:1; border:1.5px solid #D7EADD; background:#F3FAF5; border-radius:12px; padding:20px 16px;">
+        <div style="display:flex; align-items:center; justify-content:space-between;"><div style="width:40px; height:40px; border-radius:10px; background:#E1F0E7; color:#3B7A53; display:flex; align-items:center; justify-content:center; font-size:16px;">✓</div><span style="font-size:11px; font-weight:700; color:#3B7A53; background:#E1F0E7; padding:3px 8px; border-radius:20px;">.srt</span></div>
+        <div style="font-family:'Noto Sans JP'; font-size:14px; font-weight:500; margin-top:12px;">日本語ラジオ_第3回.srt</div>
+        <div style="font-size:12px; color:#8A8073; margin-top:3px;">128 lignes · UTF-8 détecté</div>
+      </div>
+    </div>
+
+    <!-- pipeline -->
+    <div style="margin-top:20px; background:#FAF7F2; border:1px solid #EFE9E0; border-radius:12px; padding:16px 18px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;"><span style="font-size:13px; font-weight:600;">Analyse linguistique</span><span style="font-size:12px; color:#3D4F8C; font-weight:600;">71%</span></div>
+      <div style="height:6px; background:#E7E1D8; border-radius:4px; overflow:hidden; margin-bottom:14px;"><div style="width:71%; height:100%; background:#3D4F8C; border-radius:4px;"></div></div>
+      <div style="display:flex; flex-direction:column; gap:9px; font-size:13px;">
+        <div style="display:flex; align-items:center; gap:9px; color:#3B7A53;"><span style="width:16px; height:16px; border-radius:50%; background:#4E9D6B; color:#fff; display:flex; align-items:center; justify-content:center; font-size:10px;">✓</span>Parsing des sous-titres · 128 phrases</div>
+        <div style="display:flex; align-items:center; gap:9px; color:#3B7A53;"><span style="width:16px; height:16px; border-radius:50%; background:#4E9D6B; color:#fff; display:flex; align-items:center; justify-content:center; font-size:10px;">✓</span>Tokenisation &amp; lemmatisation</div>
+        <div style="display:flex; align-items:center; gap:9px; color:#2B2722;"><span style="width:16px; height:16px; border-radius:50%; border:2px solid #3D4F8C; box-sizing:border-box;"></span>Enrichissement JMdict · furigana · JLPT</div>
+        <div style="display:flex; align-items:center; gap:9px; color:#A89E8F;"><span style="width:16px; height:16px; border-radius:50%; border:2px solid #DDD6CB; box-sizing:border-box;"></span>Indexation du vocabulaire</div>
+      </div>
+    </div>
+    <div style="margin-top:18px; background:#3D4F8C; color:#fff; text-align:center; font-size:14px; font-weight:600; padding:12px; border-radius:10px;">Ouvrir dans le lecteur</div>
+  </div>
+</div>
+
+<div style="position:absolute; left:0; top:2120px; width:1280px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:14px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Encadré vocabulaire — 3 variantes</div>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:start;">
+
+    <!-- Variant A: detailed cards -->
+    <div>
+      <div style="font-size:13px; font-weight:600; margin-bottom:4px;">A — Cartes détaillées <span style="font-weight:400; color:#A89E8F;">· défaut</span></div>
+      <div style="font-size:12px; color:#8A8073; margin-bottom:12px; line-height:1.5;">Toutes les infos visibles d'un coup. Idéal sur desktop, lecture posée.</div>
+      <div style="background:#fff; border:1px solid #ECE6DC; border-radius:12px; box-shadow:0 8px 24px rgba(40,30,20,.05); padding:14px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; gap:11px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #4E9D6B; border-radius:8px;">
+          <div style="flex:1;"><div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>今日<rt style="font-size:10px; color:#7E8AB5;">きょう</rt></ruby></span></div><div style="font-size:13px; color:#4B4338; margin-top:4px;">aujourd'hui</div><div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">nom</span><span style="font-size:10px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 7px; border-radius:5px;">N5</span></div></div>
+          <span style="color:#C9C1B4; font-size:15px;">☆</span>
+        </div>
+        <div style="display:flex; gap:11px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #D8604E; border-radius:8px;">
+          <div style="flex:1;"><div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>行<rt style="font-size:10px; color:#7E8AB5;">い</rt></ruby>きます</span></div><div style="font-size:11px; color:#A89E8F; margin-top:2px;">行く（いく）</div><div style="font-size:13px; color:#4B4338; margin-top:3px;">aller</div><div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">verbe</span><span style="font-size:10px; font-weight:700; color:#C24B36; background:#FBEBE7; padding:2px 7px; border-radius:5px;">N5</span></div></div>
+          <span style="color:#D99B2B; font-size:15px;">★</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Variant B: dense list -->
+    <div>
+      <div style="font-size:13px; font-weight:600; margin-bottom:4px;">B — Liste dense</div>
+      <div style="font-size:12px; color:#8A8073; margin-bottom:12px; line-height:1.5;">Une ligne par mot, statut en pastille. Pour phrases longues &amp; mobile.</div>
+      <div style="background:#fff; border:1px solid #ECE6DC; border-radius:12px; box-shadow:0 8px 24px rgba(40,30,20,.05); overflow:hidden;">
+        <div style="display:flex; align-items:center; gap:11px; padding:12px 14px; border-bottom:1px solid #F4F0E8;"><span style="width:8px; height:8px; border-radius:50%; background:#4E9D6B; flex-shrink:0;"></span><span style="font-family:'Noto Sans JP'; font-size:18px; width:74px;"><ruby>今日<rt style="font-size:9px; color:#7E8AB5;">きょう</rt></ruby></span><span style="flex:1; font-size:13px; color:#4B4338;">aujourd'hui</span><span style="font-size:10px; font-weight:700; color:#4E9D6B;">N5</span></div>
+        <div style="display:flex; align-items:center; gap:11px; padding:12px 14px; border-bottom:1px solid #F4F0E8; opacity:.55;"><span style="width:8px; height:8px; border-radius:50%; background:#D8D2C7; flex-shrink:0;"></span><span style="font-family:'Noto Sans JP'; font-size:18px; width:74px;">は</span><span style="flex:1; font-size:13px; color:#8A8073;">particule · thème</span><span style="font-size:10px; color:#A89E8F;">—</span></div>
+        <div style="display:flex; align-items:center; gap:11px; padding:12px 14px; border-bottom:1px solid #F4F0E8;"><span style="width:8px; height:8px; border-radius:50%; background:#D99B2B; flex-shrink:0;"></span><span style="font-family:'Noto Sans JP'; font-size:18px; width:74px;"><ruby>学校<rt style="font-size:9px; color:#7E8AB5;">がっこう</rt></ruby></span><span style="flex:1; font-size:13px; color:#4B4338;">école</span><span style="font-size:10px; font-weight:700; color:#B07D17;">N5</span></div>
+        <div style="display:flex; align-items:center; gap:11px; padding:12px 14px; border-bottom:1px solid #F4F0E8; opacity:.55;"><span style="width:8px; height:8px; border-radius:50%; background:#D8D2C7; flex-shrink:0;"></span><span style="font-family:'Noto Sans JP'; font-size:18px; width:74px;">へ</span><span style="flex:1; font-size:13px; color:#8A8073;">particule · direction</span><span style="font-size:10px; color:#A89E8F;">—</span></div>
+        <div style="display:flex; align-items:center; gap:11px; padding:12px 14px;"><span style="width:8px; height:8px; border-radius:50%; background:#D8604E; flex-shrink:0;"></span><span style="font-family:'Noto Sans JP'; font-size:18px; width:74px;"><ruby>行<rt style="font-size:9px; color:#7E8AB5;">い</rt></ruby>きます</span><span style="flex:1; font-size:13px; color:#4B4338;">aller</span><span style="font-size:10px; font-weight:700; color:#C24B36;">N5</span></div>
+      </div>
+    </div>
+
+    <!-- Variant C: focus / flashcard -->
+    <div>
+      <div style="font-size:13px; font-weight:600; margin-bottom:4px;">C — Focus mot à mot</div>
+      <div style="font-size:12px; color:#8A8073; margin-bottom:12px; line-height:1.5;">Un mot agrandi à la fois, navigation au clavier. Mode étude profonde.</div>
+      <div style="background:#fff; border:1px solid #ECE6DC; border-radius:12px; box-shadow:0 8px 24px rgba(40,30,20,.05); padding:22px 20px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; font-size:12px; color:#A89E8F; margin-bottom:18px;"><span>5 / 5 mots</span><span style="display:flex; gap:8px;"><span style="width:22px; height:22px; border:1px solid #E7E1D8; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#6E665C;">‹</span><span style="width:22px; height:22px; border:1px solid #E7E1D8; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#6E665C;">›</span></span></div>
+        <div style="text-align:center; padding:8px 0 4px;">
+          <div style="font-family:'Noto Sans JP'; font-size:46px; line-height:1.4;"><ruby>行<rt style="font-size:16px; color:#7E8AB5;">い</rt></ruby>きます</div>
+          <div style="font-size:14px; color:#6E665C; font-family:'Noto Sans JP'; margin-top:6px;">いきます</div>
+          <div style="font-size:18px; color:#2B2722; margin-top:14px;">aller</div>
+          <div style="display:flex; justify-content:center; gap:8px; margin-top:14px;"><span style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:3px 9px; border-radius:6px;">verbe · poli</span><span style="font-size:11px; font-weight:700; color:#C24B36; background:#FBEBE7; padding:3px 9px; border-radius:6px;">N5 · nouveau</span></div>
+        </div>
+        <div style="margin-top:18px; padding-top:16px; border-top:1px solid #F0EBE2; font-family:'Noto Sans JP'; font-size:14px; color:#6E665C; text-align:center; line-height:1.9;">今日は学校へ<span style="color:#2B2722; font-weight:700; background:#FBEBE7; padding:1px 4px; border-radius:4px;">行きます</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:0; top:3120px; width:1360px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:12px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Écran lecteur — desktop · encadré 2×2 (variante D)</div>
+  <div style="background:#FAF7F2; border-radius:6px; box-shadow:0 1px 3px rgba(40,30,20,.10), 0 18px 50px rgba(40,30,20,.07); overflow:hidden; border:1px solid #ECE6DC;">
+
+    <!-- app bar -->
+    <div style="height:54px; display:flex; align-items:center; justify-content:space-between; padding:0 20px; background:#fff; border-bottom:1px solid #ECE6DC;">
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div style="display:flex; align-items:center; gap:9px; color:#6E665C; font-size:14px; cursor:pointer;"><span style="font-size:17px;">‹</span>Catalogue</div>
+        <div style="width:1px; height:18px; background:#ECE6DC;"></div>
+        <div style="font-family:'Noto Sans JP'; font-size:14px; font-weight:500; color:#2B2722;">日本語ラジオ — 第3回</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:18px;">
+        <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:#6E665C;">Niveau cible
+          <span style="display:inline-flex; align-items:center; gap:5px; background:#ECEEF7; color:#3D4F8C; font-weight:600; font-size:12px; padding:4px 9px; border-radius:20px;">N4 ▾</span>
+        </div>
+        <div style="width:30px; height:30px; border-radius:50%; background:#3D4F8C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600;">R</div>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 470px;">
+
+      <!-- video + transport -->
+      <div style="padding:20px;">
+        <div style="position:relative; aspect-ratio:16/9; border-radius:8px; overflow:hidden; background:#16140F; background-image:repeating-linear-gradient(135deg,#1c1a14 0 14px,#191710 14px 28px);">
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:'IBM Plex Mono','SF Mono',monospace; font-size:12px; letter-spacing:0.18em; color:#5b564a; text-transform:uppercase;">vidéo locale / youtube</span>
+          </div>
+          <div style="position:absolute; left:0; right:0; bottom:0; padding:34px 30px 26px; background:linear-gradient(to top, rgba(8,7,5,.82), rgba(8,7,5,0));">
+            <div style="font-family:'Noto Sans JP'; font-size:34px; line-height:2; color:#fff; text-align:center; font-weight:500; letter-spacing:0.01em;">
+              <ruby>今日<rt style="font-size:15px; color:#cfd6ee;">きょう</rt></ruby>は<ruby>学校<rt style="font-size:15px; color:#cfd6ee;">がっこう</rt></ruby>へ<ruby>行<rt style="font-size:15px; color:#cfd6ee;">い</rt></ruby>きます
+            </div>
+            <div style="text-align:center; font-size:14px; color:rgba(255,255,255,.62); margin-top:6px;">Aujourd'hui, je vais à l'école.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8A8073;">02:14</span>
+            <div style="flex:1; height:5px; border-radius:3px; background:#E7E1D8; position:relative;">
+              <div style="position:absolute; left:0; top:0; bottom:0; width:38%; background:#3D4F8C; border-radius:3px;"></div>
+              <div style="position:absolute; left:38%; top:50%; width:13px; height:13px; border-radius:50%; background:#3D4F8C; border:2px solid #fff; transform:translate(-50%,-50%); box-shadow:0 1px 3px rgba(0,0,0,.25);"></div>
+            </div>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8A8073;">05:48</span>
+          </div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:14px;">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <div style="width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:15px; cursor:pointer;">⏮</div>
+              <div style="width:46px; height:46px; border-radius:50%; background:#3D4F8C; color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer; box-shadow:0 3px 10px rgba(61,79,140,.35);">❚❚</div>
+              <div style="width:36px; height:36px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:15px; cursor:pointer;">⏭</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid #E7E1D8; border-radius:22px; padding:6px 12px; cursor:pointer;">
+                <span style="width:30px; height:16px; border-radius:10px; background:#3D4F8C; position:relative; display:inline-block;"><span style="position:absolute; right:2px; top:2px; width:12px; height:12px; border-radius:50%; background:#fff;"></span></span>
+                <span style="font-size:13px; color:#3D4F8C; font-weight:600;">Pause auto</span>
+              </div>
+              <div style="width:36px; height:36px; border-radius:9px; border:1px solid #E7E1D8; background:#fff; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:14px;">🔊</div>
+              <div style="width:36px; height:36px; border-radius:9px; border:1px solid #E7E1D8; background:#fff; display:flex; align-items:center; justify-content:center; color:#6E665C; font-size:14px;">⛶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- vocab panel 2x2 -->
+      <div style="border-left:1px solid #ECE6DC; background:#fff; display:flex; flex-direction:column;">
+        <div style="padding:18px 20px 14px; border-bottom:1px solid #F0EBE2;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8073; font-weight:600;">Phrase en cours</span>
+            <span style="font-size:12px; color:#A89E8F;">5 mots</span>
+          </div>
+          <div style="font-family:'Noto Sans JP'; font-size:19px; margin-top:10px; color:#2B2722;">今日は学校へ行きます</div>
+        </div>
+
+        <div style="padding:14px; display:grid; grid-template-columns:1fr 1fr; gap:10px; align-items:start;">
+
+          <!-- 今日 known -->
+          <div style="display:flex; gap:10px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #4E9D6B; border-radius:8px;">
+            <div style="flex:1; min-width:0;">
+              <div style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>今日<rt style="font-size:10px; color:#7E8AB5;">きょう</rt></ruby></div>
+              <div style="font-size:13px; color:#4B4338; margin-top:4px;">aujourd'hui</div>
+              <div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">nom</span><span style="font-size:10px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 7px; border-radius:5px;">N5</span></div>
+            </div>
+            <span style="color:#C9C1B4; font-size:15px;">☆</span>
+          </div>
+
+          <!-- は particle -->
+          <div style="padding:11px 12px; border:1px solid #EFE9E0; border-left:3px solid #D8D2C7; border-radius:8px; background:#FCFAF6;">
+            <div style="font-family:'Noto Sans JP'; font-size:19px; color:#6E665C;">は</div>
+            <div style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px; display:inline-block; margin-top:7px;">particule</div>
+            <div style="font-size:11px; color:#A89E8F; margin-top:5px;">thème · « wa »</div>
+          </div>
+
+          <!-- 学校 learning -->
+          <div style="display:flex; gap:10px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #D99B2B; border-radius:8px;">
+            <div style="flex:1; min-width:0;">
+              <div style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>学校<rt style="font-size:10px; color:#7E8AB5;">がっこう</rt></ruby></div>
+              <div style="font-size:13px; color:#4B4338; margin-top:4px;">école</div>
+              <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">nom</span><span style="font-size:10px; font-weight:700; color:#B07D17; background:#FBF1DD; padding:2px 7px; border-radius:5px;">N5</span></div>
+            </div>
+            <span style="color:#C9C1B4; font-size:15px;">☆</span>
+          </div>
+
+          <!-- へ particle -->
+          <div style="padding:11px 12px; border:1px solid #EFE9E0; border-left:3px solid #D8D2C7; border-radius:8px; background:#FCFAF6;">
+            <div style="font-family:'Noto Sans JP'; font-size:19px; color:#6E665C;">へ</div>
+            <div style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px; display:inline-block; margin-top:7px;">particule</div>
+            <div style="font-size:11px; color:#A89E8F; margin-top:5px;">direction · « e »</div>
+          </div>
+
+          <!-- 行きます new (spans both columns) -->
+          <div style="grid-column:1 / -1; display:flex; gap:10px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #D8604E; border-radius:8px;">
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:baseline; gap:9px;"><span style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>行<rt style="font-size:10px; color:#7E8AB5;">い</rt></ruby>きます</span><span style="font-size:11px; color:#A89E8F; font-family:'Noto Sans JP';">行く（いく）</span></div>
+              <div style="font-size:13px; color:#4B4338; margin-top:4px;">aller</div>
+              <div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">verbe · poli</span><span style="font-size:10px; font-weight:700; color:#C24B36; background:#FBEBE7; padding:2px 7px; border-radius:5px;">N5</span><span style="font-size:10px; color:#C24B36;">nouveau</span></div>
+            </div>
+            <span style="color:#D99B2B; font-size:15px;">★</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:0; top:2560px; width:600px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:14px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Encadré vocabulaire — variante D</div>
+  <div style="font-size:13px; font-weight:600; margin-bottom:4px;">D — Cartes détaillées en 2×2</div>
+  <div style="font-size:12px; color:#8A8073; margin-bottom:12px; line-height:1.5;">Reprend la carte de la variante A, disposée en grille deux par deux. Plus de mots visibles sans défilement — utile pour les phrases courtes/moyennes et les écrans larges.</div>
+  <div style="background:#fff; border:1px solid #ECE6DC; border-radius:12px; box-shadow:0 8px 24px rgba(40,30,20,.05); padding:16px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+      <span style="font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#8A8073; font-weight:600;">Phrase en cours</span>
+      <span style="font-family:'Noto Sans JP'; font-size:14px; color:#6E665C;">昨日は図書館で勉強しました</span>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+
+      <!-- 昨日 known -->
+      <div style="display:flex; gap:11px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #4E9D6B; border-radius:8px;">
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>昨日<rt style="font-size:10px; color:#7E8AB5;">きのう</rt></ruby></span></div>
+          <div style="font-size:13px; color:#4B4338; margin-top:4px;">hier</div>
+          <div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">nom</span><span style="font-size:10px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 7px; border-radius:5px;">N5</span></div>
+        </div>
+        <span style="color:#C9C1B4; font-size:15px;">☆</span>
+      </div>
+
+      <!-- 図書館 new -->
+      <div style="display:flex; gap:11px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #D8604E; border-radius:8px;">
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>図書館<rt style="font-size:10px; color:#7E8AB5;">としょかん</rt></ruby></span></div>
+          <div style="font-size:13px; color:#4B4338; margin-top:4px;">bibliothèque</div>
+          <div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">nom</span><span style="font-size:10px; font-weight:700; color:#C24B36; background:#FBEBE7; padding:2px 7px; border-radius:5px;">N4</span></div>
+        </div>
+        <span style="color:#D99B2B; font-size:15px;">★</span>
+      </div>
+
+      <!-- 勉強 learning -->
+      <div style="display:flex; gap:11px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #D99B2B; border-radius:8px;">
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Noto Sans JP'; font-size:21px;"><ruby>勉強<rt style="font-size:10px; color:#7E8AB5;">べんきょう</rt></ruby></span></div>
+          <div style="font-size:13px; color:#4B4338; margin-top:4px;">étude</div>
+          <div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">nom · suru</span><span style="font-size:10px; font-weight:700; color:#B07D17; background:#FBF1DD; padding:2px 7px; border-radius:5px;">N5</span></div>
+        </div>
+        <span style="color:#C9C1B4; font-size:15px;">☆</span>
+      </div>
+
+      <!-- しました known verb -->
+      <div style="display:flex; gap:11px; padding:11px 12px; border:1px solid #EAE4DA; border-left:3px solid #4E9D6B; border-radius:8px;">
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Noto Sans JP'; font-size:21px;">しました</span></div>
+          <div style="font-size:11px; color:#A89E8F; margin-top:2px;">する</div>
+          <div style="font-size:13px; color:#4B4338; margin-top:3px;">faire</div>
+          <div style="display:flex; gap:6px; margin-top:8px;"><span style="font-size:10px; color:#6E665C; background:#F2EEE6; padding:2px 7px; border-radius:5px;">verbe · poli</span><span style="font-size:10px; font-weight:700; color:#4E9D6B; background:#E7F2EB; padding:2px 7px; border-radius:5px;">N5</span></div>
+        </div>
+        <span style="color:#C9C1B4; font-size:15px;">☆</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div style="position:absolute; left:1440px; top:2320px; width:620px;">
+  <div data-drags-parent="1" style="font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8A8073; margin-bottom:14px; cursor:grab; display:flex; align-items:center; gap:8px;"><span style="width:18px; height:1px; background:#C9C1B4;"></span>Révision des favoris — en contexte</div>
+  <div style="background:#FAF7F2; border:1px solid #ECE6DC; border-radius:14px; box-shadow:0 8px 24px rgba(40,30,20,.05); padding:22px;">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;">
+      <div style="display:flex; align-items:center; gap:10px;"><span style="color:#D99B2B; font-size:18px;">★</span><span style="font-size:16px; font-weight:700;">Mes favoris</span><span style="font-size:12px; color:#A89E8F;">24 mots</span></div>
+      <span style="font-size:12px; color:#6E665C; background:#fff; border:1px solid #E7E1D8; padding:6px 12px; border-radius:20px;">Mot 7 / 24</span>
+    </div>
+
+    <div style="background:#fff; border:1px solid #EAE4DA; border-radius:12px; padding:22px; text-align:center;">
+      <div style="font-family:'Noto Sans JP'; font-size:40px; line-height:1.4;"><ruby>勉強<rt style="font-size:14px; color:#7E8AB5;">べんきょう</rt></ruby></div>
+      <div style="font-size:16px; color:#2B2722; margin-top:8px;">étude · étudier</div>
+      <div style="display:flex; justify-content:center; gap:8px; margin-top:10px;"><span style="font-size:11px; color:#6E665C; background:#F2EEE6; padding:3px 9px; border-radius:6px;">nom · suru</span><span style="font-size:11px; font-weight:700; color:#B07D17; background:#FBF1DD; padding:3px 9px; border-radius:6px;">N5</span></div>
+    </div>
+
+    <div style="font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#A89E8F; margin:18px 0 10px;">Vu dans ces phrases</div>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <div style="background:#fff; border:1px solid #EAE4DA; border-radius:10px; padding:14px 16px;">
+        <div style="font-family:'Noto Sans JP'; font-size:18px; line-height:1.9; color:#2B2722;">昨日は<ruby>図書館<rt style="font-size:9px; color:#7E8AB5;">としょかん</rt></ruby>で<span style="background:#FBF1DD; border-radius:4px; padding:1px 3px;"><ruby>勉強<rt style="font-size:9px; color:#7E8AB5;">べんきょう</rt></ruby></span>しました</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;"><span style="font-size:12px; color:#8A8073;">Hier, j'ai étudié à la bibliothèque.</span><span style="font-size:11px; color:#3D4F8C; font-weight:600;">街歩き vlog · 04:12 ▶</span></div>
+      </div>
+      <div style="background:#fff; border:1px solid #EAE4DA; border-radius:10px; padding:14px 16px;">
+        <div style="font-family:'Noto Sans JP'; font-size:18px; line-height:1.9; color:#2B2722;"><ruby>毎日<rt style="font-size:9px; color:#7E8AB5;">まいにち</rt></ruby><span style="background:#FBF1DD; border-radius:4px; padding:1px 3px;"><ruby>勉強<rt style="font-size:9px; color:#7E8AB5;">べんきょう</rt></ruby></span>するのは<ruby>大変<rt style="font-size:9px; color:#7E8AB5;">たいへん</rt></ruby>です</div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:8px;"><span style="font-size:12px; color:#8A8073;">Étudier tous les jours, c'est dur.</span><span style="font-size:11px; color:#3D4F8C; font-weight:600;">日本語ラジオ · 02:30 ▶</span></div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:18px;">
+      <div style="flex:1; text-align:center; font-size:13px; font-weight:600; color:#6E665C; background:#fff; border:1px solid #E7E1D8; padding:11px; border-radius:10px;">‹ Précédent</div>
+      <div style="flex:1; text-align:center; font-size:13px; font-weight:600; color:#fff; background:#3D4F8C; padding:11px; border-radius:10px;">Suivant ›</div>
+    </div>
+  </div>
+</div></x-dc>
+</body>
+</html>
