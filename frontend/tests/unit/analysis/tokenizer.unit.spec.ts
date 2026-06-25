@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { tokenize } from "../../src/features/analysis/tokenizer";
-import { SentenceAnalysis } from "../../src/types/sentence-analysis";
+import { tokenize } from "../../../src/features/analysis/tokenizer";
+import { SentenceAnalysis } from "../../../src/types/sentence-analysis";
 
 vi.mock("@patdx/kuromoji", () => {
   const mockTokenizer = {
