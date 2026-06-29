@@ -30,16 +30,17 @@ export async function tokenize(text: string): Promise<SentenceAnalysis> {
 
   const tokens: Array<Token> = await Promise.all(
     rawTokens.map(async (t) => {
-      const dictionaryInfo = await getDictionaryInfo(t.basic_form);
-      const jlpt = await lookupJlpt(t.basic_form);
+      const lemma = t.basic_form !== "*" ? t.basic_form : t.surface_form;
+      const dictionaryInfo = await getDictionaryInfo(lemma);
+      const jlpt = await lookupJlpt(lemma);
       return {
         surface: t.surface_form,
-        lemma: t.basic_form,
+        lemma,
         pos: t.pos,
         readingSurfaceKatakana: t.reading,
         readingSurfaceHiragana: t.reading ? katakanaToHiragana(t.reading) : undefined,
-        readingLemma: t.basic_form ? dictionaryInfo?.reading : undefined,
-        meaning: t.basic_form ? dictionaryInfo?.meanings : undefined,
+        readingLemma: dictionaryInfo?.reading,
+        meaning: dictionaryInfo?.meanings,
         jlpt,
       }
     })
