@@ -25,6 +25,6 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true
 	},
-	"include": ["src", "tests/e2e"],
+	"include": ["src", "tests/e2e", "tests/unit/subtitle-store.test.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
