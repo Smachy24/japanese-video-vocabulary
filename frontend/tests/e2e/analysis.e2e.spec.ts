@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("tokenize a simple verb with the real dictionary", async ({ page }) => {
+test("full analysis with a simple verb successful", async ({ page }) => {
   await page.goto("/");
 
   const expectedResult = {
@@ -14,6 +14,7 @@ test("tokenize a simple verb with the real dictionary", async ({ page }) => {
         readingSurfaceHiragana: "たべる",
         readingLemma: "たべる",
         meaning: ["manger"],
+        jlpt: "N5",
       },
     ],
   };

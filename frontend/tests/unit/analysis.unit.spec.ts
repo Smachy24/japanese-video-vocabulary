@@ -43,6 +43,15 @@ vi.mock("../../src/features/analysis/dictionary", () => ({
   },
 }));
 
+vi.mock("../../src/features/analysis/jlpt-parser", () => ({
+  lookupJlpt: async (lemma: string) => {
+    const dict: Record<string, string> = {
+      "食べる": "N5",
+    };
+    return dict[lemma];
+  },
+}));
+
 
 describe("tokenize", () => {
   it("should tokenize a simple verb", async () => {
@@ -58,6 +67,7 @@ describe("tokenize", () => {
           readingSurfaceHiragana: "たべる",
           readingLemma: "たべる",
           meaning: ["manger"],
+          jlpt: "N5",
         },
       ],
     };
