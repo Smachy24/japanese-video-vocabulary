@@ -5,8 +5,9 @@ import { useSubtitleStore } from "../../store/subtitle-store";
 export const SubtitleFileInput = (): FunctionComponent => {
   const { importSubtitles, isAnalyzing, activeFileName } = useSubtitleStore();
 
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
-    const file = e.target.files?.[0];
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const input = event.target;
+    const file = input.files?.[0];
     if (!file) return;
 
     if (!file.name.endsWith(".srt")) {
@@ -14,7 +15,7 @@ export const SubtitleFileInput = (): FunctionComponent => {
     }
 
     await importSubtitles(file);
-    e.target.value = "";
+    input.value = "";
   };
 
   return (
@@ -27,11 +28,11 @@ export const SubtitleFileInput = (): FunctionComponent => {
         }`}
       >
         <input
-          type="file"
           accept=".srt"
           className="hidden"
-          onChange={handleFileChange}
           disabled={isAnalyzing}
+          type="file"
+          onChange={handleFileChange}
         />
         {isAnalyzing ? (
           <span>Analyse en cours...</span>
