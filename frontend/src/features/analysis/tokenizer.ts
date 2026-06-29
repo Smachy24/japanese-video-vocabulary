@@ -16,16 +16,20 @@ const loader: LoaderConfig = {
   },
 };
 
+// Build the tokenizer once
 const tokenizerPromise = new TokenizerBuilder({
   loader,
 }).build();
 
+
+// First pipeline step : tokenize
 export async function tokenize(text: string): Promise<Array<Token>> {
   const tokenizer = await tokenizerPromise;
 
   const rawTokens = tokenizer.tokenize(text);
 
   const tokens = rawTokens.map((t) => {
+    // Unknown words have a basic_form of "*", so we use the surface_form in that case
     const lemma = t.basic_form !== "*" ? t.basic_form : t.surface_form;
     return {
       surface: t.surface_form,

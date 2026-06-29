@@ -6,12 +6,12 @@ export interface Token {
   readingSurfaceHiragana?: string;
   readingLemma?: string; // Jmdict source (hiragana)
   meanings?: Array<string>;
-  jlpt?: JpltLevel;
+  jlpt?: JlptLevel;
 }
 
 
 
-export enum JpltLevel {
+export enum JlptLevel {
   N5 = "N5",
   N4 = "N4",
   N3 = "N3",

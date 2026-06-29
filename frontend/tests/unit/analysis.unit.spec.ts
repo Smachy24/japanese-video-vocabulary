@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { tokenize } from "../../src/features/analysis/tokenizer";
 import { SentenceAnalysis } from "../../src/types/sentence-analysis";
+import { JlptLevel } from "../../src/types/token";
+import { analyzeSentence } from "../../src/features/analysis/analysis-pipeline";
 
 vi.mock("@patdx/kuromoji", () => {
   const mockTokenizer = {
@@ -35,27 +36,33 @@ vi.mock("@patdx/kuromoji", () => {
 });
 
 vi.mock("../../src/features/analysis/dictionary", () => ({
-  getDictionaryInfo: async (lemma: string) => {
-    const dict: Record<string, { meanings: string[]; reading: string }> = {
-      "食べる": { meanings: ["manger"], reading: "たべる" },
+  getTokensDictionaryInfo: async (tokens: Array<{ lemma: string }>) => {
+    const dict: Record<string, { meanings: string[]; readingLemma: string }> = {
+      "食べる": { meanings: ["manger"], readingLemma: "たべる" },
     };
-    return dict[lemma];
+    return tokens.map((token) => ({
+      ...token,
+      ...dict[token.lemma],
+    }));
   },
 }));
 
 vi.mock("../../src/features/analysis/jlpt-parser", () => ({
-  lookupJlpt: async (lemma: string) => {
-    const dict: Record<string, string> = {
-      "食べる": "N5",
+  getTokensJlptLevel: async (tokens: Array<{ lemma: string }>) => {
+    const dict: Record<string, JlptLevel> = {
+      "食べる": JlptLevel.N5,
     };
-    return dict[lemma];
+    return tokens.map((token) => ({
+      ...token,
+      jlpt: dict[token.lemma],
+    }));
   },
 }));
 
 
 describe("tokenize", () => {
   it("should tokenize a simple verb", async () => {
-    const sentenceAnalysis = await tokenize("食べる");
+    const sentenceAnalysis = await analyzeSentence("食べる");
     const expectedResult: SentenceAnalysis = {
       text: "食べる",
       tokens: [
@@ -66,8 +73,8 @@ describe("tokenize", () => {
           readingSurfaceKatakana: "タベル",
           readingSurfaceHiragana: "たべる",
           readingLemma: "たべる",
-          meaning: ["manger"],
-          jlpt: "N5",
+          meanings: ["manger"],
+          jlpt: JlptLevel.N5,
         },
       ],
     };

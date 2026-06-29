@@ -12,6 +12,7 @@ const TERM_BANK_COUNT = 3;
 let dictionaryPromise: Promise<Map<string, DictionaryResult>> | null = null;
 
 async function loadDictionary(): Promise<Map<string, DictionaryResult>> {
+  // Parse the dictionary JSON files and create a map of kanji to their meanings and readings
   const map = new Map<string, DictionaryResult>();
 
   const fetches = Array.from({ length: TERM_BANK_COUNT }, (_, index) =>
@@ -37,12 +38,14 @@ async function loadDictionary(): Promise<Map<string, DictionaryResult>> {
 }
 
 function getDictionary(): Promise<Map<string, DictionaryResult>> {
+  // Load the dictionary only once and cache the result
   if (!dictionaryPromise) {
     dictionaryPromise = loadDictionary();
   }
   return dictionaryPromise;
 }
 
+// Second pipeline step : get infos
 export async function getTokensDictionaryInfo(tokens: Array<Token>): Promise<Array<Token>> {
   const dictionary = await getDictionary();
   return tokens.map((token): Token => {

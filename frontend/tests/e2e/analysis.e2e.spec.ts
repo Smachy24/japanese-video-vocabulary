@@ -13,15 +13,15 @@ test("full analysis with a simple verb successful", async ({ page }) => {
         readingSurfaceKatakana: "タベル",
         readingSurfaceHiragana: "たべる",
         readingLemma: "たべる",
-        meaning: ["manger"],
+        meanings: ["manger"],
         jlpt: "N5",
       },
     ],
   };
 
   const result = await page.evaluate(async () => {
-    const { tokenize } = await import("../../src/features/analysis/tokenizer");
-    return tokenize("食べる");
+    const { analyzeSentence } = await import("../../src/features/analysis/analysis-pipeline");
+    return analyzeSentence("食べる");
   });
 
   expect(result.text).toBe("食べる");

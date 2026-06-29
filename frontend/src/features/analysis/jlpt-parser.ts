@@ -1,20 +1,20 @@
-import { JpltLevel, type Token } from "../../types/token";
+import { JlptLevel, type Token } from "../../types/token";
 
 type JlptEntry = [string, string, { reading: string; frequency: { value: number; displayValue: string } }];
 
 const FILE_COUNT = 5;
-const LEVEL_MAP = new Map<number, JpltLevel>([
-  [1, JpltLevel.N1],
-  [2, JpltLevel.N2],
-  [3, JpltLevel.N3],
-  [4, JpltLevel.N4],
-  [5, JpltLevel.N5],
+const LEVEL_MAP = new Map<number, JlptLevel>([
+  [1, JlptLevel.N1],
+  [2, JlptLevel.N2],
+  [3, JlptLevel.N3],
+  [4, JlptLevel.N4],
+  [5, JlptLevel.N5],
 ]);
 
-let jlptPromise: Promise<Map<string, JpltLevel>> | null = null;
+let jlptPromise: Promise<Map<string, JlptLevel>> | null = null;
 
-async function loadJlpt(): Promise<Map<string, JpltLevel>> {
-  const map = new Map<string, JpltLevel>();
+async function loadJlpt(): Promise<Map<string, JlptLevel>> {
+  const map = new Map<string, JlptLevel>();
 
   const fetches = Array.from({ length: FILE_COUNT }, (_, index) => {
     const fileNumber = index + 1;
@@ -36,13 +36,15 @@ async function loadJlpt(): Promise<Map<string, JpltLevel>> {
   return map;
 }
 
-function getJlptMap(): Promise<Map<string, JpltLevel>> {
+function getJlptMap(): Promise<Map<string, JlptLevel>> {
   if (!jlptPromise) {
     jlptPromise = loadJlpt();
   }
   return jlptPromise;
 }
 
+
+// Third pipeline step : get JLPT level
 export async function getTokensJlptLevel(tokens: Array<Token>): Promise<Array<Token>> {
   const jlptMap = await getJlptMap();
   return tokens.map((token): Token => {
