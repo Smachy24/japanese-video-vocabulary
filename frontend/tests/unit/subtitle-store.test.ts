@@ -15,7 +15,7 @@ const SINGLE_LINE_SRT = `1
 00:00:01,000 --> 00:00:03,000
 今日は学校へ行きます`;
 
-vi.mock("../features/analysis/analysis-pipeline", () => ({
+vi.mock("../../src/features/analysis/analysis-pipeline", () => ({
   analyzeSubtitles: vi.fn(async (srt: string) => {
     const blocks = srt.trim().split(/\n\n+/);
     return blocks
