@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
-import { SentenceAnalysis } from "../../src/types/sentence-analysis";
-import { JlptLevel } from "../../src/types/token";
+import { JlptLevel, type Token } from "../../src/types/token";
 import { analyzeSentence } from "../../src/features/analysis/analysis-pipeline";
+import { parseSrt } from "../../src/features/analysis/subtitles-parser";
+import type { SrtEntry } from "../../src/types/subtitle";
 
 vi.mock("@patdx/kuromoji", () => {
   const mockTokenizer = {
@@ -62,24 +63,80 @@ vi.mock("../../src/features/analysis/jlpt-parser", () => ({
 
 describe("tokenize", () => {
   it("should tokenize a simple verb", async () => {
-    const sentenceAnalysis = await analyzeSentence("食べる");
-    const expectedResult: SentenceAnalysis = {
-      text: "食べる",
-      tokens: [
-        {
-          surface: "食べる",
-          lemma: "食べる",
-          pos: "動詞",
-          readingSurfaceKatakana: "タベル",
-          readingSurfaceHiragana: "たべる",
-          readingLemma: "たべる",
-          meanings: ["manger"],
-          jlpt: JlptLevel.N5,
-        },
-      ],
+    const tokens = await analyzeSentence("食べる");
+    const expectedToken: Token = {
+      surface: "食べる",
+      lemma: "食べる",
+      pos: "動詞",
+      readingSurfaceKatakana: "タベル",
+      readingSurfaceHiragana: "たべる",
+      readingLemma: "たべる",
+      meanings: ["manger"],
+      jlpt: JlptLevel.N5,
     };
 
-    expect(sentenceAnalysis.tokens).toHaveLength(1);
-    expect(sentenceAnalysis.tokens[0]).toEqual(expectedResult.tokens[0]);
+    expect(tokens).toHaveLength(1);
+    expect(tokens[0]).toEqual(expectedToken);
+  });
+});
+
+
+describe("subtitle-parser", () => {
+  it("should parse a simple SRT string", () => {
+    const input = [
+      "3",
+      "00:00:08,718 --> 00:00:12,179",
+      "今日は学校へ行きます",
+      "",
+    ].join("\n");
+
+    const result = parseSrt(input);
+    const expectedResult: Array<SrtEntry> = [
+      {
+        startTime: 8.718,
+        endTime: 12.179,
+        text: "今日は学校へ行きます",
+      },
+    ];
+
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual(expectedResult[0]);
+  });
+
+  it("should parse multi-line subtitle text", () => {
+    const input = [
+      "4",
+      "00:00:16,308 --> 00:00:19,562",
+      "（片桐）永遠のライバル",
+      "大空翼(おおぞら つばさ)と日向小次郎(ひゅうが こじろう)",
+      "",
+    ].join("\n");
+
+    const result = parseSrt(input);
+
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual({
+      startTime: 16.308,
+      endTime: 19.562,
+      text: "（片桐）永遠のライバル\n大空翼(おおぞら つばさ)と日向小次郎(ひゅうが こじろう)",
+    });
+  });
+
+  it("should handle leading space before text", () => {
+    const input = [
+      "5",
+      "00:00:20,312 --> 00:00:22,523",
+      " （片桐）そして 選ばれし選手たち",
+      "",
+    ].join("\n");
+
+    const result = parseSrt(input);
+
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual({
+      startTime: 20.312,
+      endTime: 22.523,
+      text: "（片桐）そして 選ばれし選手たち",
+    });
   });
 });
