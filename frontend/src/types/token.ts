@@ -5,7 +5,7 @@ export interface Token {
   readingSurfaceKatakana?: string; // Kuromoji source (katakana)
   readingSurfaceHiragana?: string;
   readingLemma?: string; // Jmdict source (hiragana)
-  meaning?: Array<string>;
+  meanings?: Array<string>;
   jlpt?: JpltLevel;
 }
 

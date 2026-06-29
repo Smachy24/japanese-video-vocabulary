@@ -1,8 +1,5 @@
 import { type LoaderConfig, TokenizerBuilder } from "@patdx/kuromoji";
-import type { SentenceAnalysis } from "../../types/sentence-analysis";
 import { katakanaToHiragana } from "../../common/utils";
-import { getDictionaryInfo } from "./dictionary";
-import { lookupJlpt } from "./jlpt-parser";
 import type { Token } from "../../types/token";
 
 const loader: LoaderConfig = {
@@ -23,31 +20,21 @@ const tokenizerPromise = new TokenizerBuilder({
   loader,
 }).build();
 
-export async function tokenize(text: string): Promise<SentenceAnalysis> {
+export async function tokenize(text: string): Promise<Array<Token>> {
   const tokenizer = await tokenizerPromise;
 
   const rawTokens = tokenizer.tokenize(text);
 
-  const tokens: Array<Token> = await Promise.all(
-    rawTokens.map(async (t) => {
-      const lemma = t.basic_form !== "*" ? t.basic_form : t.surface_form;
-      const dictionaryInfo = await getDictionaryInfo(lemma);
-      const jlpt = await lookupJlpt(lemma);
-      return {
-        surface: t.surface_form,
-        lemma,
-        pos: t.pos,
-        readingSurfaceKatakana: t.reading,
-        readingSurfaceHiragana: t.reading ? katakanaToHiragana(t.reading) : undefined,
-        readingLemma: dictionaryInfo?.reading,
-        meaning: dictionaryInfo?.meanings,
-        jlpt,
-      }
-    })
-  );
+  const tokens = rawTokens.map((t) => {
+    const lemma = t.basic_form !== "*" ? t.basic_form : t.surface_form;
+    return {
+      surface: t.surface_form,
+      lemma,
+      pos: t.pos,
+      readingSurfaceKatakana: t.reading,
+      readingSurfaceHiragana: t.reading ? katakanaToHiragana(t.reading) : undefined,
+    };
+  });
 
-  return {
-    text,
-    tokens,
-  }
+  return tokens;
 }

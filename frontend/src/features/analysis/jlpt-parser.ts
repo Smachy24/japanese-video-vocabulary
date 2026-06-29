@@ -1,4 +1,4 @@
-import { JpltLevel } from "../../types/token";
+import { JpltLevel, type Token } from "../../types/token";
 
 type JlptEntry = [string, string, { reading: string; frequency: { value: number; displayValue: string } }];
 
@@ -43,7 +43,13 @@ function getJlptMap(): Promise<Map<string, JpltLevel>> {
   return jlptPromise;
 }
 
-export async function lookupJlpt(lemma: string): Promise<JpltLevel | undefined> {
-  const map = await getJlptMap();
-  return map.get(lemma);
+export async function getTokensJlptLevel(tokens: Array<Token>): Promise<Array<Token>> {
+  const jlptMap = await getJlptMap();
+  return tokens.map((token): Token => {
+    const jlpt = jlptMap.get(token.lemma);
+    return {
+      ...token,
+      jlpt,
+    };
+  });
 }

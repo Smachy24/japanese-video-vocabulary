@@ -1,3 +1,5 @@
+import type { Token } from "../../types/token";
+
 type DictEntry = [kanji: string, reading: string, pos: string, sense: string, misc: string, meanings: Array<string>];
 
 interface DictionaryResult {
@@ -41,7 +43,14 @@ function getDictionary(): Promise<Map<string, DictionaryResult>> {
   return dictionaryPromise;
 }
 
-export async function getDictionaryInfo(lemma: string): Promise<{ meanings: Array<string>; reading: string } | undefined> {
-  const dict = await getDictionary();
-  return dict.get(lemma);
+export async function getTokensDictionaryInfo(tokens: Array<Token>): Promise<Array<Token>> {
+  const dictionary = await getDictionary();
+  return tokens.map((token): Token => {
+    const dictInfo = dictionary.get(token.lemma);
+    return {
+      ...token,
+      meanings: dictInfo?.meanings,
+      readingLemma: dictInfo?.reading,
+    };
+  });
 }
