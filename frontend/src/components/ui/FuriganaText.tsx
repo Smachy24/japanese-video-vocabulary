@@ -12,14 +12,14 @@ function containsKanji(text: string): boolean {
 export const FuriganaText = ({ tokens }: Props): FunctionComponent => {
   return (
     <span>
-      {tokens.map((token, i) =>
+      {tokens.map((token, index) =>
         containsKanji(token.surface) && token.readingSurfaceHiragana ? (
-          <ruby key={i}>
+          <ruby key={index}>
             {token.surface}
             <rt>{token.readingSurfaceHiragana}</rt>
           </ruby>
         ) : (
-          <span key={i}>{token.surface}</span>
+          <span key={index}>{token.surface}</span>
         )
       )}
     </span>
