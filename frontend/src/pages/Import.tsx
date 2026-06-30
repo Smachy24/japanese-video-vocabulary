@@ -19,8 +19,8 @@ export const Import = (): FunctionComponent => {
   const handleSubmit = async (): Promise<void> => {
     if (!videoFile || !subtitleFile) return;
 
-    await importVideo(videoFile);
-    await importSubtitles(subtitleFile);
+    const videoId = await importVideo(videoFile);
+    await importSubtitles(subtitleFile, videoId);
 
     setVideoFile(null);
     setSubtitleFile(null);
