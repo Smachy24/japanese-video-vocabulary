@@ -1,5 +1,6 @@
 import { db } from "../common/db";
 import type { VideoFile } from "../common/entities";
+import { evictBlobUrl } from "../features/player/blob-url-cache";
 import { create } from "zustand";
 
 type VideoState = {
@@ -46,6 +47,7 @@ const useVideoStore = create<VideoStore>((set, get) => ({
   },
   deleteVideo: async (id): Promise<void> => {
     await db.videos.delete(id);
+    evictBlobUrl(id);
     const { activeVideo } = get();
     if (activeVideo?.id === id) {
       set({ activeVideo: null });

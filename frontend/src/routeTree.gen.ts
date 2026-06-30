@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ImportRouteImport } from './routes/import'
 import { Route as CatalogRouteImport } from './routes/catalog'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PlayerVideoIdRouteImport } from './routes/player.$videoId'
 
 const ImportRoute = ImportRouteImport.update({
   id: '/import',
@@ -28,35 +29,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlayerVideoIdRoute = PlayerVideoIdRouteImport.update({
+  id: '/player/$videoId',
+  path: '/player/$videoId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/import': typeof ImportRoute
+  '/player/$videoId': typeof PlayerVideoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/import': typeof ImportRoute
+  '/player/$videoId': typeof PlayerVideoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/catalog': typeof CatalogRoute
   '/import': typeof ImportRoute
+  '/player/$videoId': typeof PlayerVideoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalog' | '/import'
+  fullPaths: '/' | '/catalog' | '/import' | '/player/$videoId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalog' | '/import'
-  id: '__root__' | '/' | '/catalog' | '/import'
+  to: '/' | '/catalog' | '/import' | '/player/$videoId'
+  id: '__root__' | '/' | '/catalog' | '/import' | '/player/$videoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CatalogRoute: typeof CatalogRoute
   ImportRoute: typeof ImportRoute
+  PlayerVideoIdRoute: typeof PlayerVideoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/player/$videoId': {
+      id: '/player/$videoId'
+      path: '/player/$videoId'
+      fullPath: '/player/$videoId'
+      preLoaderRoute: typeof PlayerVideoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CatalogRoute: CatalogRoute,
   ImportRoute: ImportRoute,
+  PlayerVideoIdRoute: PlayerVideoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
