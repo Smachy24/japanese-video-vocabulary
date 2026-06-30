@@ -27,19 +27,24 @@ export const Player = (): FunctionComponent => {
   if (!blobUrl || !activeVideo) return null;
 
   return (
-    <div className="flex min-h-screen flex-col bg-black">
-      <div className="flex items-center gap-4 bg-gray-900 px-4 py-3">
-        <Link className="text-sm text-gray-400 transition hover:text-white" to="/">
-          ← Catalogue
+    <div className="flex min-h-screen flex-col bg-app">
+      <header className="flex items-center gap-3 border-b border-border bg-surface px-5 py-3.5">
+        <Link
+          className="flex items-center gap-1 text-sm text-ink-secondary transition hover:text-ink"
+          to="/"
+        >
+          ‹ Catalogue
         </Link>
-        <span className="text-sm font-medium text-white">{activeVideo.name}</span>
-      </div>
-      <div className="flex justify-center bg-black">
-        <div className="w-full max-w-5xl">
+        <div className="h-4 w-px bg-border" />
+        <span className="font-japanese text-sm font-medium text-ink">{activeVideo.name}</span>
+      </header>
+
+      <div className="flex flex-1 flex-col lg:grid lg:grid-cols-[1fr_380px]">
+        <div className="bg-black">
           <VideoPlayer src={blobUrl} />
         </div>
+        <WordPanel />
       </div>
-      <WordPanel />
     </div>
   );
 };

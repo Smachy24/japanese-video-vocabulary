@@ -28,27 +28,30 @@ export const Import = (): FunctionComponent => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-lg rounded-xl bg-white p-8 shadow-md">
-        <h1 className="mb-6 text-2xl font-bold text-gray-800">Importer</h1>
+    <div className="flex min-h-screen items-center justify-center bg-app px-4">
+      <div className="w-full max-w-lg rounded-2xl border border-border bg-surface p-8 shadow-sm">
+        <h1 className="mb-1 text-[19px] font-bold text-ink">Nouvelle vidéo</h1>
+        <p className="mb-6 text-sm text-ink-muted">
+          La vidéo et les sous-titres restent sur votre appareil.
+        </p>
 
-        <section className="mb-8">
-          <h2 className="mb-3 text-lg font-semibold text-gray-700">Vidéo</h2>
+        <section className="mb-6">
+          <h2 className="mb-2.5 text-sm font-semibold text-ink-secondary">Vidéo</h2>
           <VideoFileInput value={videoFile} onChange={setVideoFile} />
         </section>
 
         <section className="mb-8">
-          <h2 className="mb-3 text-lg font-semibold text-gray-700">Sous-titres</h2>
+          <h2 className="mb-2.5 text-sm font-semibold text-ink-secondary">Sous-titres</h2>
           <SubtitleFileInput value={subtitleFile} onChange={setSubtitleFile} />
         </section>
 
         <button
-          className="w-full rounded-lg bg-blue-500 px-4 py-3 font-medium text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
+          className="w-full rounded-lg bg-brand py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           disabled={!canSubmit}
           type="button"
           onClick={() => void handleSubmit()}
         >
-          {isAnalyzing ? "Analyse en cours..." : "Importer"}
+          {isAnalyzing ? "Analyse en cours…" : "Importer"}
         </button>
       </div>
     </div>

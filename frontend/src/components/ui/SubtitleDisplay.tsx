@@ -8,8 +8,11 @@ export const SubtitleDisplay = (): FunctionComponent => {
   if (!subtitle) return null;
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-16 flex justify-center px-4">
-      <p className="rounded bg-black/70 px-3 py-1 text-center text-xl font-medium text-white">
+    <div
+      className="subtitle-overlay pointer-events-none absolute inset-x-0 bottom-0 text-center"
+      style={{ background: "linear-gradient(to top, rgba(8,7,5,0.85), transparent)" }}
+    >
+      <p className="px-8 pb-16 pt-10 font-japanese text-[28px] font-medium leading-loose text-white">
         <FuriganaText tokens={subtitle.tokens} />
       </p>
     </div>

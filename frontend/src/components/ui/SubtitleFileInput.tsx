@@ -18,19 +18,20 @@ export const SubtitleFileInput = ({ value, onChange }: Props): FunctionComponent
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <label className="flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white px-6 py-8 text-gray-600 transition hover:border-blue-400 hover:bg-blue-50">
+    <div className="flex flex-col gap-2">
+      <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-brand-light/40 px-6 py-8 text-center transition hover:border-brand hover:bg-brand-light">
         <input
           accept=".srt"
           className="hidden"
           type="file"
           onChange={handleFileChange}
         />
-        <span>Sélectionner un fichier de sous-titres (.srt)</span>
+        <span className="text-sm font-medium text-brand">Sélectionner un fichier .srt</span>
+        <span className="text-xs text-ink-muted">Sous-titres japonais</span>
       </label>
       {value && (
-        <p className="text-sm text-gray-500">
-          Fichier sélectionné : <span className="font-medium text-gray-700">{value.name}</span>
+        <p className="text-sm text-ink-muted">
+          Fichier : <span className="font-medium text-ink">{value.name}</span>
         </p>
       )}
     </div>
