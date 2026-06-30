@@ -16,15 +16,18 @@ const loader: LoaderConfig = {
   },
 };
 
-// Build the tokenizer once
-const tokenizerPromise = new TokenizerBuilder({
-  loader,
-}).build();
+let tokenizerPromise: ReturnType<TokenizerBuilder["build"]> | null = null;
 
+function getTokenizer(): ReturnType<TokenizerBuilder["build"]> {
+  if (!tokenizerPromise) {
+    tokenizerPromise = new TokenizerBuilder({ loader }).build();
+  }
+  return tokenizerPromise;
+}
 
 // First pipeline step : tokenize
 export async function tokenize(text: string): Promise<Array<Token>> {
-  const tokenizer = await tokenizerPromise;
+  const tokenizer = await getTokenizer();
 
   const rawTokens = tokenizer.tokenize(text);
 
