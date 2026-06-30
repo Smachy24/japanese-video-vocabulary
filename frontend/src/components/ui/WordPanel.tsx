@@ -6,53 +6,55 @@ import { FuriganaText } from "./FuriganaText";
 
 const JLPT_LEVELS: Array<JlptLevel> = [JlptLevel.N5, JlptLevel.N4, JlptLevel.N3, JlptLevel.N2, JlptLevel.N1];
 
-const JLPT_COLORS: Record<string, string> = {
-  N5: "bg-green-700",
-  N4: "bg-teal-700",
-  N3: "bg-blue-700",
-  N2: "bg-purple-700",
-  N1: "bg-red-700",
+const JLPT_BADGE: Record<string, { text: string; bg: string }> = {
+  N5: { text: "text-known-text", bg: "bg-known-bg" },
+  N4: { text: "text-known-text", bg: "bg-known-bg" },
+  N3: { text: "text-learning-text", bg: "bg-learning-bg" },
+  N2: { text: "text-new-text", bg: "bg-new-bg" },
+  N1: { text: "text-new-text", bg: "bg-new-bg" },
 };
 
 function matchesFilter(token: Token, filter: JlptFilter): boolean {
   if (filter === null) return true;
-  if (!token.jlpt) return true; // niveau inconnu : toujours affiché
+  if (!token.jlpt) return true;
   return parseInt(token.jlpt[1]!) >= parseInt(filter[1]!);
 }
 
+const JlptBadge = ({ level }: { level: string }): FunctionComponent => {
+  const style = JLPT_BADGE[level] ?? { text: "text-ink-muted", bg: "bg-surface-alt" };
+  return (
+    <span className={`rounded px-2 py-0.5 text-[11px] font-bold ${style.text} ${style.bg}`}>
+      {level}
+    </span>
+  );
+};
+
 const WordCard = ({ token }: { token: Token }): FunctionComponent => (
-  <div className="flex min-w-0 overflow-hidden rounded-lg bg-gray-800">
-    {/* Status bar — colorée en Story 12 */}
-    <div className="w-1 shrink-0 bg-gray-600" />
-    <div className="flex flex-col gap-1 px-3 py-2">
-      <span className="text-base font-medium text-white">
-        <FuriganaText tokens={[token]} />
-      </span>
-      {token.readingSurfaceHiragana && (
-        <span className="text-xs text-gray-300">{token.readingSurfaceHiragana}</span>
-      )}
-      {token.meanings && token.meanings.length > 0 && (
-        <span className="max-w-40 truncate text-xs text-gray-400">{token.meanings[0]}</span>
-      )}
-      <div className="flex flex-wrap gap-1">
-        {token.jlpt && (
-          <span className={`rounded px-1.5 py-0.5 text-xs font-semibold text-white ${JLPT_COLORS[token.jlpt] ?? "bg-gray-600"}`}>
-            {token.jlpt}
-          </span>
-        )}
-        <span className="rounded bg-gray-700 px-1.5 py-0.5 text-xs text-gray-300">
-          {token.pos}
+  <div className="flex gap-3 rounded-lg border border-border bg-surface p-3" style={{ borderLeftWidth: "3px", borderLeftColor: "var(--color-border)" }}>
+    <div className="min-w-0 flex-1">
+      <div className="flex items-baseline gap-2">
+        <span className="font-japanese text-[22px] text-ink">
+          <FuriganaText tokens={[token]} />
         </span>
+        {token.readingSurfaceHiragana && (
+          <span className="font-japanese text-sm text-ink-secondary">{token.readingSurfaceHiragana}</span>
+        )}
+      </div>
+      {token.meanings && token.meanings.length > 0 && (
+        <p className="mt-1 truncate text-sm text-ink">{token.meanings[0]}</p>
+      )}
+      <div className="mt-2 flex flex-wrap items-center gap-1.5">
+        <span className="rounded bg-surface-alt px-2 py-0.5 text-[11px] text-ink-secondary">{token.pos}</span>
+        {token.jlpt && <JlptBadge level={token.jlpt} />}
       </div>
     </div>
   </div>
 );
 
-const JlptFilterBar = ({ filter, setFilter }: { filter: JlptFilter; setFilter: (f: JlptFilter) => void }): FunctionComponent => (
-  <div className="mb-3 flex items-center gap-2">
-    <span className="text-xs text-gray-500">JLPT</span>
+const FilterBar = ({ filter, setFilter }: { filter: JlptFilter; setFilter: (f: JlptFilter) => void }): FunctionComponent => (
+  <div className="flex flex-wrap items-center gap-1.5 border-b border-border-subtle px-4 py-2.5">
     <button
-      className={`rounded px-2 py-0.5 text-xs font-medium transition ${filter === null ? "bg-white text-gray-900" : "text-gray-400 hover:text-white"}`}
+      className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${filter === null ? "bg-ink text-surface" : "text-ink-muted hover:text-ink"}`}
       type="button"
       onClick={() => { setFilter(null); }}
     >
@@ -61,7 +63,7 @@ const JlptFilterBar = ({ filter, setFilter }: { filter: JlptFilter; setFilter: (
     {JLPT_LEVELS.map((level) => (
       <button
         key={level}
-        className={`rounded px-2 py-0.5 text-xs font-medium transition ${filter === level ? `${JLPT_COLORS[level]} text-white` : "text-gray-400 hover:text-white"}`}
+        className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${filter === level ? "bg-brand text-surface" : "text-ink-muted hover:text-ink"}`}
         type="button"
         onClick={() => { setFilter(level); }}
       >
@@ -80,12 +82,27 @@ export const WordPanel = (): FunctionComponent => {
     : [];
 
   return (
-    <div className="border-t border-gray-700 bg-gray-900 px-4 py-3">
-      <JlptFilterBar filter={filter} setFilter={setFilter} />
-      <div className="min-h-16 flex flex-wrap gap-2">
-        {visibleTokens.map((token, index) => (
-          <WordCard key={index} token={token} />
-        ))}
+    <div className="flex flex-col border-t border-border bg-surface lg:border-l lg:border-t-0">
+      <div className="border-b border-border px-5 py-4">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Phrase en cours</span>
+          {subtitle && (
+            <span className="text-xs text-ink-faint">{visibleTokens.length} mots</span>
+          )}
+        </div>
+        {subtitle && (
+          <p className="mt-2.5 font-japanese text-[19px] text-ink">{subtitle.text}</p>
+        )}
+      </div>
+
+      <FilterBar filter={filter} setFilter={setFilter} />
+
+      <div className="flex-1 overflow-y-auto p-3">
+        <div className="flex flex-col gap-2">
+          {visibleTokens.map((token, index) => (
+            <WordCard key={index} token={token} />
+          ))}
+        </div>
       </div>
     </div>
   );

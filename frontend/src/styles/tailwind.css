@@ -1,1 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  /* Typographie */
+  --font-sans: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-japanese: 'Noto Sans JP', sans-serif;
+
+  /* Brand */
+  --color-brand: #3D4F8C;
+  --color-brand-light: #ECEEF7;
+  --color-brand-muted: #7E8AB5;
+
+  /* Surfaces */
+  --color-app: #FAF7F2;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #FCFAF6;
+
+  /* Texte */
+  --color-ink: #2B2722;
+  --color-ink-secondary: #6E665C;
+  --color-ink-muted: #8A8073;
+  --color-ink-faint: #A89E8F;
+
+  /* Bordures */
+  --color-border: #ECE6DC;
+  --color-border-subtle: #F0EBE2;
+
+  /* Statut vocabulaire */
+  --color-new: #D8604E;
+  --color-new-bg: #FBEBE7;
+  --color-new-text: #C24B36;
+
+  --color-learning: #D99B2B;
+  --color-learning-bg: #FBF1DD;
+  --color-learning-text: #B07D17;
+
+  --color-known: #4E9D6B;
+  --color-known-bg: #E7F2EB;
+  --color-known-text: #3B7A53;
+}
+
+@layer base {
+  body {
+    @apply bg-app font-sans text-ink;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  rt {
+    color: var(--color-brand-muted);
+    font-weight: 500;
+  }
+
+  /* Surcharge rt pour l'overlay sous-titres (fond sombre) */
+  .subtitle-overlay rt {
+    color: #cfd6ee;
+  }
+}
