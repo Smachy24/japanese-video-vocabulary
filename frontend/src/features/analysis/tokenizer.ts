@@ -18,7 +18,7 @@ const loader: LoaderConfig = {
 
 let tokenizerPromise: ReturnType<TokenizerBuilder["build"]> | null = null;
 
-function getTokenizer() {
+function getTokenizer(): ReturnType<TokenizerBuilder["build"]> {
   if (!tokenizerPromise) {
     tokenizerPromise = new TokenizerBuilder({ loader }).build();
   }

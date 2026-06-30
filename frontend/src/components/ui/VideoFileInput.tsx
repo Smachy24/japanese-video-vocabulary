@@ -13,7 +13,7 @@ export const VideoFileInput = ({ value, onChange }: Props): FunctionComponent =>
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const hasValidExtension = ACCEPTED_EXTENSIONS.some((ext) => file.name.toLowerCase().endsWith(ext));
+    const hasValidExtension = ACCEPTED_EXTENSIONS.some((extension) => file.name.toLowerCase().endsWith(extension));
     if (!hasValidExtension) return;
 
     onChange(file);

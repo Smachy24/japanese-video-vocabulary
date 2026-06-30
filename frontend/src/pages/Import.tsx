@@ -43,10 +43,10 @@ export const Import = (): FunctionComponent => {
         </section>
 
         <button
-          type="button"
-          disabled={!canSubmit}
-          onClick={() => void handleSubmit()}
           className="w-full rounded-lg bg-blue-500 px-4 py-3 font-medium text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
+          disabled={!canSubmit}
+          type="button"
+          onClick={() => void handleSubmit()}
         >
           {isAnalyzing ? "Analyse en cours..." : "Importer"}
         </button>
