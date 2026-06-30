@@ -40,10 +40,13 @@ export const Catalog = (): FunctionComponent => {
                 key={video.id}
                 className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
               >
-                <div>
-                  <p className="font-medium text-gray-800">{video.name}</p>
-                  <p className="text-sm text-gray-400">Vidéo importée</p>
-                </div>
+                <Link
+                  className="font-medium text-gray-800 hover:text-blue-500"
+                  params={{ videoId: String(video.id) }}
+                  to="/player/$videoId"
+                >
+                  {video.name}
+                </Link>
                 <button
                   className="text-sm text-red-400 transition hover:text-red-600"
                   type="button"
