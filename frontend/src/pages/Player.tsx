@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import type { FunctionComponent } from "../common/types";
 import { getOrCreateBlobUrl } from "../features/player/blob-url-cache";
 import { VideoPlayer } from "../components/ui/VideoPlayer";
+import { WordPanel } from "../components/ui/WordPanel";
 import { useVideoStore } from "../store/video-store";
 import { useSubtitleStore } from "../store/subtitle-store";
 import { Route } from "../routes/player.$videoId";
@@ -33,11 +34,12 @@ export const Player = (): FunctionComponent => {
         </Link>
         <span className="text-sm font-medium text-white">{activeVideo.name}</span>
       </div>
-      <div className="flex flex-1 items-center justify-center">
+      <div className="flex justify-center bg-black">
         <div className="w-full max-w-5xl">
           <VideoPlayer src={blobUrl} />
         </div>
       </div>
+      <WordPanel />
     </div>
   );
 };
