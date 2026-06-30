@@ -10,7 +10,7 @@ type VideoState = {
 };
 
 type VideoActions = {
-  importVideo: (file: File) => Promise<void>;
+  importVideo: (file: File) => Promise<number>;
   loadVideos: () => Promise<void>;
   selectVideo: (id: number) => Promise<void>;
   deleteVideo: (id: number) => Promise<void>;
@@ -23,16 +23,17 @@ const useVideoStore = create<VideoStore>((set, get) => ({
   videos: [],
   activeVideo: null,
   isLoading: true,
-  importVideo: async (file): Promise<void> => {
+  importVideo: async (file): Promise<number> => {
     const data = await file.arrayBuffer();
     const existing = await db.videos.where("name").equals(file.name).first();
-    await db.videos.put({
+    const id = (await db.videos.put({
       id: existing?.id,
       name: file.name,
       data,
       mimeType: file.type,
-    });
+    })) as number;
     await get().loadVideos();
+    return id;
   },
   loadVideos: async (): Promise<void> => {
     set({ isLoading: true });

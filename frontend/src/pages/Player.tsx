@@ -4,15 +4,22 @@ import type { FunctionComponent } from "../common/types";
 import { getOrCreateBlobUrl } from "../features/player/blob-url-cache";
 import { VideoPlayer } from "../components/ui/VideoPlayer";
 import { useVideoStore } from "../store/video-store";
+import { useSubtitleStore } from "../store/subtitle-store";
 import { Route } from "../routes/player.$videoId";
 
 export const Player = (): FunctionComponent => {
   const { videoId } = Route.useParams();
   const { selectVideo, activeVideo } = useVideoStore();
+  const { loadSubtitlesByVideoId, clearActiveSubtitles } = useSubtitleStore();
 
   useEffect(() => {
     void selectVideo(Number(videoId));
   }, [videoId, selectVideo]);
+
+  useEffect(() => {
+    void loadSubtitlesByVideoId(Number(videoId));
+    return (): void => { clearActiveSubtitles(); };
+  }, [videoId, loadSubtitlesByVideoId, clearActiveSubtitles]);
 
   const blobUrl = activeVideo?.id ? getOrCreateBlobUrl(activeVideo) : null;
 
