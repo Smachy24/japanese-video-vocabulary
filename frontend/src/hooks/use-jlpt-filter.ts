@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { JlptLevel } from "../types/token";
+import type { JlptLevel } from "../types/token";
 
 export type JlptFilter = JlptLevel | null;
 
