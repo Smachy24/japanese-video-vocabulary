@@ -15,6 +15,7 @@ const JLPT_BADGE: Record<string, { text: string; bg: string }> = {
 };
 
 function matchesFilter(token: Token, filter: JlptFilter): boolean {
+  if (token.pos === "記号") return false;
   if (filter === null) return true;
   if (!token.jlpt) return true;
   return parseInt(token.jlpt[1]!) >= parseInt(filter[1]!);
@@ -29,22 +30,20 @@ const JlptBadge = ({ level }: { level: string }): FunctionComponent => {
   );
 };
 
-const WordCard = ({ token }: { token: Token }): FunctionComponent => (
-  <div className="flex gap-3 rounded-lg border border-border bg-surface p-3" style={{ borderLeftWidth: "3px", borderLeftColor: "var(--color-border)" }}>
+const WordCard = ({ token, colSpan }: { token: Token; colSpan?: boolean }): FunctionComponent => (
+  <div
+    className="flex gap-3 rounded-lg border border-border bg-surface p-3"
+    style={{ borderLeftWidth: "3px", borderLeftColor: "var(--color-border)", gridColumn: colSpan ? "1 / -1" : undefined }}
+  >
     <div className="min-w-0 flex-1">
-      <div className="flex items-baseline gap-2">
-        <span className="font-japanese text-[22px] text-ink">
-          <FuriganaText tokens={[token]} />
-        </span>
-        {token.readingSurfaceHiragana && (
-          <span className="font-japanese text-sm text-ink-secondary">{token.readingSurfaceHiragana}</span>
-        )}
+      <div className="font-japanese text-[21px] text-ink">
+        <FuriganaText tokens={[token]} />
       </div>
       {token.meanings && token.meanings.length > 0 && (
-        <p className="mt-1 truncate text-sm text-ink">{token.meanings[0]}</p>
+        <p className="mt-1 text-sm text-ink">{token.meanings[0]}</p>
       )}
       <div className="mt-2 flex flex-wrap items-center gap-1.5">
-        <span className="rounded bg-surface-alt px-2 py-0.5 text-[11px] text-ink-secondary">{token.pos}</span>
+        <span className="rounded bg-surface-alt px-2 py-0.5 text-[10px] text-ink-secondary">{token.pos}</span>
         {token.jlpt && <JlptBadge level={token.jlpt} />}
       </div>
     </div>
@@ -98,9 +97,13 @@ export const WordPanel = (): FunctionComponent => {
       <FilterBar filter={filter} setFilter={setFilter} />
 
       <div className="flex-1 overflow-y-auto p-3">
-        <div className="flex flex-col gap-2">
+        <div className="grid grid-cols-2 gap-2.5">
           {visibleTokens.map((token, index) => (
-            <WordCard key={index} token={token} />
+            <WordCard
+              key={index}
+              colSpan={visibleTokens.length % 2 !== 0 && index === visibleTokens.length - 1}
+              token={token}
+            />
           ))}
         </div>
       </div>
